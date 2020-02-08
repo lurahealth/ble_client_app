@@ -7,15 +7,14 @@ class DeviceScanProvider with ChangeNotifier {
   PermissionHandler _permissionHandler;
   FlutterBlue _flutterBlue;
   bool scanning = false; // checks to make sure we only trigger 1 scan when
-                        // we load the device scanning screen for the first time
+                         // we load the device scanning screen for the first time
 
   Future<String> scanForDevices() async {
-    if(!scanning) {
+    if (!scanning) {
       scanning = true;
       print("Scanning for devices");
-      bool locationPermissions = await permissionCheck(
-          PermissionGroup.locationAlways);
-      print(locationPermissions);
+      bool locationPermissions =
+          await permissionCheck(PermissionGroup.locationAlways);
       if (locationPermissions) {
         scanResults = [];
         if (_flutterBlue == null) {
@@ -34,11 +33,11 @@ class DeviceScanProvider with ChangeNotifier {
   }
 
   void onScanResult(List<ScanResult> scanResults) {
-    scanResults.forEach((result){
+    scanResults.forEach((result) {
       String name = result.device.name;
-      if(name != null &&
-         name.length > 0 &&
-         !(this.scanResults.contains(result))){
+      if (name != null &&
+          name.length > 0 &&
+          !(this.scanResults.contains(result))) {
         this.scanResults.add(result);
       }
     });
@@ -50,7 +49,6 @@ class DeviceScanProvider with ChangeNotifier {
       _permissionHandler = PermissionHandler();
     }
 
-    // check for location permission
     var permissionStatus =
         await _permissionHandler.checkPermissionStatus(permission);
     if (permissionStatus != PermissionStatus.granted) {
