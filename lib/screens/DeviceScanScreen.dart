@@ -34,7 +34,8 @@ class DeviceScanWidget extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Visibility(
-              visible: provider.scanResults.length > 0,
+              visible: (provider.scanningComplete ||
+                        provider.scanResults.length> 0),
               child: ListView.separated(
                   separatorBuilder: (context, index) => Divider(thickness: 1.5),
                   itemCount: provider.scanResults.length,
@@ -47,7 +48,7 @@ class DeviceScanWidget extends StatelessWidget {
                   }),
             ),
             Visibility(
-                visible: provider.scanResults.length == 0,
+                visible: !provider.scanningComplete,
                 child: LoadingWidget("Scanning for devices", StyleUtils.LURA_BLUE)
             )
           ],

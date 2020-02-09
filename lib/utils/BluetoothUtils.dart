@@ -4,7 +4,9 @@ import 'package:permission_handler/permission_handler.dart';
 FlutterBlue _flutterBlue;
 PermissionHandler _permissionHandler;
 
-Future<void> bluetoothScan(Function onScanResult) async {
+Future<void> bluetoothScan(Function onScanResult,
+                           Function onScanComplete,
+                           Function onErrorScanning) async {
   print("Scanning for devices");
   if (await checkLocationPermission(PermissionGroup.locationAlways)) {
     if (_flutterBlue == null) {
@@ -12,8 +14,11 @@ Future<void> bluetoothScan(Function onScanResult) async {
     } else {
       _flutterBlue.stopScan();
     }
-    _flutterBlue.startScan(timeout: Duration(seconds: 10));
-    _flutterBlue.scanResults.listen(onScanResult);
+    _flutterBlue.startScan(timeout: Duration(seconds: 5));
+    _flutterBlue.scanResults.listen(onScanResult,
+                                    onDone: onScanComplete,
+                                    onError: onErrorScanning,
+                                    cancelOnError: true);
   } else {
     print("No Location permission");
   }
