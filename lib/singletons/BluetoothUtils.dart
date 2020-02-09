@@ -1,9 +1,29 @@
+import 'package:ble_client_app/utils/LocationPermissionUtils.dart';
+import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+Future<BluetoothCharacteristic> getRx(BluetoothDevice device) async {
+  List<BluetoothService> services = await device.discoverServices();
+  BluetoothService uartService = getUartService(services);
+  List<BluetoothCharacteristic> characteristics = uartService.characteristics;
+  return getRxCharacteristic(characteristics);
+}
+
+BluetoothService getUartService(List<BluetoothService> services) {
+   return services
+      .firstWhere((services) => services.uuid.toString() == UART_SERVICE_UUID);
+}
+
+BluetoothCharacteristic getRxCharacteristic(
+    List<BluetoothCharacteristic> characteristics) {
+  return characteristics.firstWhere((c) => c.uuid.toString() == RX_UUID);
+}
 
 class BluetoothProvider {
   static FlutterBlue _flutterBlue;
   static final BluetoothProvider provider = BluetoothProvider._();
+
   BluetoothProvider._();
 
   FlutterBlue get flutterBlue {
@@ -15,14 +35,10 @@ class BluetoothProvider {
     }
   }
 
-  PermissionHandler _permissionHandler;
-
-  Future<void> bluetoothScan(Function onScanResult,
-      Function onScanComplete,
+  Future<void> bluetoothScan(Function onScanResult, Function onScanComplete,
       Function onErrorScanning) async {
     print("Scanning for devices");
     if (await checkLocationPermission(PermissionGroup.locationAlways)) {
-
       flutterBlue.startScan(timeout: Duration(seconds: 5));
       flutterBlue.scanResults.listen(onScanResult,
           onDone: onScanComplete,
@@ -35,26 +51,5 @@ class BluetoothProvider {
 
   Future stopScan() async {
     await flutterBlue.stopScan();
-  }
-
-  Future<bool> checkLocationPermission(PermissionGroup permission) async {
-    if (_permissionHandler == null) {
-      _permissionHandler = PermissionHandler();
-    }
-    var permissionStatus =
-    await _permissionHandler.checkPermissionStatus(permission);
-    if (permissionStatus == PermissionStatus.granted) {
-      return true;
-    } else {
-      return getLocationPermission(permission);
-    }
-  }
-
-  Future<bool> getLocationPermission(PermissionGroup permission) async {
-    var result = await _permissionHandler.requestPermissions([permission]);
-    if (result[permission] == PermissionStatus.granted)
-      return true;
-    else
-      return false;
   }
 }
