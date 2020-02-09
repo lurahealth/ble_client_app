@@ -40,4 +40,7 @@ class StringUtils{
 
   //Style
   static final TextStyle style = TextStyle(fontSize: 15);
+
+  // Secure Storage Keys
+  static String BLE_DEVICE_NAME = "ble_device_name";
 }
