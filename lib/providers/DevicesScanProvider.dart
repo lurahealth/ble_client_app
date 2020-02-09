@@ -1,5 +1,4 @@
 import 'package:ble_client_app/utils/SecureStorageUtils.dart';
-import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -66,8 +65,7 @@ class DeviceScanProvider with ChangeNotifier {
 
   void connectToDevice(BuildContext context, BluetoothDevice device) {
     _flutterBlue.stopScan();
-    SecureStorageUtils.writeToSecureStorage(StringUtils.BLE_DEVICE_NAME,
-                                            device.name);
+    SecureStorageUtils.saveBLEDeviceName(device.name);
     Navigator.pushNamed(context, "/deviceDataScreen", arguments: device);
   }
 }
