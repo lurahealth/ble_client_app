@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:ble_client_app/models/DataModel.dart';
+import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../utils/StringUtils.dart';
 
 class DatabaseProvider {
 
@@ -29,23 +28,23 @@ class DatabaseProvider {
 
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, StringUtils.DATABASE_NAME);
+    String path = join(documentsDirectory.path, DATABASE_NAME);
     return await openDatabase(path, version: CURRENT_DB_VERSION,
         onOpen: (db) {},
         onCreate: (Database db, int version) async {
-          await db.execute(StringUtils.CREATE_TABLE_QUERY);
+          await db.execute(CREATE_TABLE_QUERY);
         });
   }
 
   Future insertSensorData(DataModel dataModel) async {
     final db = await database;
-    db.insert(StringUtils.TABLE_NAME, dataModel.toMap());
+    db.insert(TABLE_NAME, dataModel.toMap());
   }
 
   Future<List<Map<String, dynamic>>> getDataByDateRange(int from, int to) async {
 
     final db = await database;
-    String query = "SELECT * FROM ${StringUtils.TABLE_NAME} WHERE ${StringUtils.TIME_STAMP} >= $from and ${StringUtils.TIME_STAMP} <= $to";
+    String query = "SELECT * FROM ${TABLE_NAME} WHERE ${TIME_STAMP} >= $from and ${TIME_STAMP} <= $to";
     print(query);
     return await db.rawQuery(query);
   }

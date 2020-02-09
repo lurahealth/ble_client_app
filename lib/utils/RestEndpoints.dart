@@ -2,7 +2,7 @@
 
 import 'package:ble_client_app/models/DataModel.dart';
 
-import 'NetworkCommon.dart';
+import '../singletons/NetworkCommon.dart';
 
 class RestEndpoints{
   static Future uploadData(DataModel dataModel) async {

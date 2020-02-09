@@ -16,6 +16,6 @@ deleteFromSecureStorage(String key) async {
 }
 
 saveBLEDeviceName(String deviceName) async {
-  await deleteFromSecureStorage(StringUtils.BLE_DEVICE_NAME);
-  await writeToSecureStorage(StringUtils.BLE_DEVICE_NAME, deviceName);
+  await deleteFromSecureStorage(BLE_DEVICE_NAME);
+  await writeToSecureStorage(BLE_DEVICE_NAME, deviceName);
 }

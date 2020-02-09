@@ -5,13 +5,14 @@ import 'package:flutter_blue/flutter_blue.dart';
 class DeviceScanListItem extends StatelessWidget {
   final ScanResult scanResult;
   final DeviceScanProvider provider;
+
   DeviceScanListItem(this.scanResult, this.provider);
 
   @override
   Widget build(BuildContext context) {
     BluetoothDevice device = scanResult.device;
     return GestureDetector(
-      // onTap: () => provider.connectToDevice(context, device),
+      onTap: () => provider.connectToDevice(context, device),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
