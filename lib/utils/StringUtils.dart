@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
-class StringUtils{
+
 
   // Database Strings
-  static final String DATABASE_NAME = "SensorData.db";
-  static final String TABLE_NAME = "Data_Table";
+  final String DATABASE_NAME = "SensorData.db";
+  final String TABLE_NAME = "Data_Table";
 
   // columns names
-  static final String ROW_ID = "row_id"; // Primary key, auto-incremented
-  static final String PH = "ph"; // pH reading
-  static final String BATTERY = "battery"; // battery voltage reading
-  static final String TEMPERATURE = "temperature"; // temperature reading
-  static final String CONNETION_TIME = "connection_time"; // time to connect to the sensor
-  static final String TIME_STAMP = "time_stamp"; // time stamp of the reading in UTC
-  static final String NOTES = "notes"; // Note for a sensor reading
-  static final String DEVICE_ID = "device_id"; // Device sending the data
-  static final String UPLOADED = "uploaded"; // if sensor data has been uploaded set to 1 else set to 0
+  final String ROW_ID = "row_id"; // Primary key, auto-incremented
+  final String PH = "ph"; // pH reading
+  final String BATTERY = "battery"; // battery voltage reading
+  final String TEMPERATURE = "temperature"; // temperature reading
+  final String CONNETION_TIME = "connection_time"; // time to connect to the sensor
+  final String TIME_STAMP = "time_stamp"; // time stamp of the reading in UTC
+  final String NOTES = "notes"; // Note for a sensor reading
+  final String DEVICE_ID = "device_id"; // Device sending the data
+  final String UPLOADED = "uploaded"; // if sensor data has been uploaded set to 1 else set to 0
 
-  static final String CREATE_TABLE_QUERY =
+  final String CREATE_TABLE_QUERY =
       "CREATE TABLE $TABLE_NAME ("
       "$ROW_ID INTEGER PRIMARY KEY,"
       "$DEVICE_ID TEXT,"
@@ -31,16 +31,19 @@ class StringUtils{
       "$TIME_STAMP INTEGER)";
 
   // UUID
-  static final String UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-  static final String RX_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+  final String UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+  final String RX_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 
   // Time format
-  static final DateFormat dataTableTimeFormat = DateFormat("HH:mm:ss");
-  static final DateFormat csvDateTimeFormat = DateFormat("dd.MMMM.yyyy HH:mm");
+  final DateFormat dataTableTimeFormat = DateFormat("HH:mm:ss");
+  final DateFormat csvDateTimeFormat = DateFormat("dd.MMMM.yyyy HH:mm");
 
   //Style
-  static final TextStyle style = TextStyle(fontSize: 15);
+  final TextStyle style = TextStyle(fontSize: 15);
 
   // Secure Storage Keys
-  static String BLE_DEVICE_NAME = "ble_device_name";
-}
+  String BLE_DEVICE_NAME = "ble_device_name";
+  
+  //Routes 
+  final MAIN_UI_SCREEN = "/mainUIScreen";
+  final DEVICE_SCAN_SCREEN = "/deviceScanScreen";
