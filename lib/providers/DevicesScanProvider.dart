@@ -1,5 +1,6 @@
 import 'package:ble_client_app/singletons/BluetoothUtils.dart';
 import 'package:ble_client_app/singletons/SecureStorageUtils.dart';
+import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
@@ -46,6 +47,6 @@ class DeviceScanProvider with ChangeNotifier {
   void connectToDevice(BuildContext context, BluetoothDevice device) {
     BluetoothProvider.provider.stopScan();
     saveBLEDeviceName(device.name);
-    Navigator.pushReplacementNamed(context, "/mainUIScreen", arguments: device);
+    Navigator.pushReplacementNamed(context, BOTTOM_NAVIGATION_SCREEN, arguments: device);
   }
 }

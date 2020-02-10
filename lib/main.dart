@@ -1,4 +1,5 @@
 import 'package:ble_client_app/utils/RouteGenerator.dart';
+import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.indigo,
             accentColor: Colors.deepOrangeAccent
         ),
-        initialRoute: '/',
+        initialRoute: DEVICE_SCAN_SCREEN,
         onGenerateRoute: RouteGenerator.generateRoute
     );
   }

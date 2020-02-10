@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:ble_client_app/models/DataModel.dart';
-import 'package:ble_client_app/models/SplineData.dart';
+import 'package:ble_client_app/models/AreaChartData.dart';
 import 'package:ble_client_app/singletons/BluetoothUtils.dart';
 import 'package:ble_client_app/singletons/DatabaseProvider.dart';
 import 'package:ble_client_app/utils/RestEndpoints.dart';
@@ -22,9 +22,10 @@ class DeviceDataProvider with ChangeNotifier {
   DateTime min = currentTime;
   DateTime max = currentTime.add(Duration(seconds: 20));
   double animationDuration = 0;
+  int currentScreen = 0;
 
   List<DataModel> allData = <DataModel>[];
-  List<SplineData> pHData = <SplineData>[];
+  List<AreaChartData> pHData = <AreaChartData>[];
 
   String connectDisconnectButtonText = "Connecting";
   StreamSubscription<List<int>> bluetoothDataSubscription;
@@ -126,7 +127,7 @@ class DeviceDataProvider with ChangeNotifier {
 
   void displayData(DataModel dataModel, DateTime nowLocal) {
     allData.insert(0, dataModel);
-    pHData.add(SplineData.fromLiveData(nowLocal, dataModel.pH));
+    pHData.add(AreaChartData.fromLiveData(nowLocal, dataModel.pH));
     calculateMinMaxAndAveragePH(dataModel.pH);
   }
 
@@ -175,5 +176,11 @@ class DeviceDataProvider with ChangeNotifier {
       print("Trying to connect");
       await device.connect(timeout: Duration(seconds: 10), autoConnect: false);
     }
+  }
+
+  void onBottomNavigationBarTapped(int value) {
+//    print("Tapped $value");
+    currentScreen = value;
+    notifyListeners();
   }
 }

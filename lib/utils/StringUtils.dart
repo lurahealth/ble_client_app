@@ -45,5 +45,9 @@ import 'package:intl/intl.dart';
   String BLE_DEVICE_NAME = "ble_device_name";
   
   //Routes 
-  final MAIN_UI_SCREEN = "/mainUIScreen";
-  final DEVICE_SCAN_SCREEN = "/deviceScanScreen";
+  const BOTTOM_NAVIGATION_SCREEN = "/bottonNavigatinoScreen";
+  const DEVICE_SCAN_SCREEN = "/deviceScanScreen";
+  const FULL_SCREEN_GRAPH ="/fullScreenGraph";
+
+  //TAGs
+  const String PH_GRAPH = "ph_graphs";
