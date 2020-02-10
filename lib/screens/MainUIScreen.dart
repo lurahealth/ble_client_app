@@ -1,5 +1,8 @@
 import 'package:ble_client_app/providers/DeviceDataProvider.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
+import 'package:ble_client_app/widget/graphs/MainUIScreenGraph.dart';
+import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenButtonRow.dart';
+import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenDailyStatsWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -35,6 +38,8 @@ class MainUIScreen extends StatelessWidget {
 }
 
 class MainUIWidget extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     final BluetoothDeviceState deviceState =
@@ -44,9 +49,29 @@ class MainUIWidget extends StatelessWidget {
     if (deviceState == BluetoothDeviceState.connected) {
       provider.getData();
     }
+
+    final Text pHStaticText = Text(
+        "Your current pH is"
+    );
+
+    final Text currentPh = Text(
+        provider.currentPh.toString(),
+      style: TextStyle(
+        fontSize: 50,
+        fontWeight: FontWeight.w500,
+        color: LURA_BLUE
+      ),
+    );
+
+    final MainUIScreenDailyStatsWidget dailyStatsWidget = MainUIScreenDailyStatsWidget(provider);
+
+    final MainUIScreenButtonRow buttonRow = MainUIScreenButtonRow(provider);
+
+    final MainUIScreenGraph graph = MainUIScreenGraph(provider);
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: StyleUtils.LURA_BLUE,
+        backgroundColor: LURA_BLUE,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -60,6 +85,25 @@ class MainUIWidget extends StatelessWidget {
           )
         ],
       ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Center(child: pHStaticText),
+                Center(child: currentPh),
+                dailyStatsWidget,
+                buttonRow,
+              ],
+            ),
+          ),
+          Expanded(
+              child: graph
+          ),
+        ],
+      )
     );
   }
 }

@@ -17,11 +17,11 @@ class DeviceDataProvider with ChangeNotifier {
 
   bool receivingData = false;
   String notes;
-  bool autoScroll = true;
   int width = 20; // seconds
   static DateTime currentTime = DateTime.now();
   DateTime min = currentTime;
   DateTime max = currentTime.add(Duration(seconds: 20));
+  double animationDuration = 0;
 
   List<DataModel> allData = <DataModel>[];
   List<SplineData> pHData = <SplineData>[];
@@ -29,6 +29,13 @@ class DeviceDataProvider with ChangeNotifier {
   String connectDisconnectButtonText = "Connecting";
   StreamSubscription<List<int>> bluetoothDataSubscription;
   BluetoothCharacteristic rx;
+
+  double currentPh = 0;
+  double minPh = 10000;
+  double maxPh = 0;
+  double averagePh = 0;
+
+
 
   Stream<BluetoothDeviceState> streamDeviceState() {
     if (device != null) {
@@ -78,17 +85,15 @@ class DeviceDataProvider with ChangeNotifier {
     DateTime nowLocal = DateTime.now();
     DateTime nowUTC = nowLocal.toUtc();
     String data = utf8.decode(value);
-    print("Raw Data $value");
+//    print("Raw Data $value");
     if (data.contains(",")) {
       DataModel dataModel =
           DataModel.fromRawDataString(data, notes, deviceName, nowUTC);
-      print(dataModel.toString());
+//      print(dataModel.toString());
       saveDataInLocalDatabase(dataModel);
       displayData(dataModel, nowLocal);
       uploadData(dataModel);
-      if (autoScroll) {
-        calculateMixMaxTimes(nowLocal);
-      }
+      calculateMixMaxTimes(nowLocal);
 
       if (notes != null) {
         print(notes);
@@ -122,6 +127,26 @@ class DeviceDataProvider with ChangeNotifier {
   void displayData(DataModel dataModel, DateTime nowLocal) {
     allData.insert(0, dataModel);
     pHData.add(SplineData.fromLiveData(nowLocal, dataModel.pH));
+    calculateMinMaxAndAveragePH(dataModel.pH);
+  }
+
+  calculateMinMaxAndAveragePH(double currentPh){
+    this.currentPh = currentPh;
+    if(currentPh > maxPh){
+      maxPh = currentPh;
+    }
+
+    if(currentPh < minPh){
+      minPh = currentPh;
+    }
+    averagePh = calculateNewAverage();
+  }
+
+  double calculateNewAverage(){
+    int currentDataLength = allData.length;
+    double oldTotal = averagePh * (currentDataLength -1);
+    double newTotal = oldTotal + currentPh;
+    return newTotal/currentDataLength;
   }
 
   void uploadData(DataModel dataModel) {
@@ -137,5 +162,18 @@ class DeviceDataProvider with ChangeNotifier {
   void onDoneCalled() {
     print("on done called");
     disconnectFromDevice();
+  }
+
+  void saveNote(String note) {
+    this.notes = note;
+  }
+
+  Future<void> connectDisconnectFromDevice() async {
+    if(receivingData) {
+      await disconnectFromDevice();
+    }else{
+      print("Trying to connect");
+      await device.connect(timeout: Duration(seconds: 10), autoConnect: false);
+    }
   }
 }

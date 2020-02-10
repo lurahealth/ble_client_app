@@ -23,7 +23,7 @@ class DeviceScanWidget extends StatelessWidget {
     provider.scanForDevices();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: StyleUtils.LURA_BLUE,
+        backgroundColor: LURA_BLUE,
         title: new Text("Device scan"),
       ),
       body: RefreshIndicator(
@@ -49,7 +49,7 @@ class DeviceScanWidget extends StatelessWidget {
             ),
             Visibility(
                 visible: !provider.scanningComplete,
-                child: LoadingWidget("Scanning for devices", StyleUtils.LURA_BLUE)
+                child: LoadingWidget("Scanning for devices", LURA_BLUE)
             )
           ],
         ),
