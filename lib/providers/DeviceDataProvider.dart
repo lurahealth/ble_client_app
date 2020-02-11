@@ -35,6 +35,8 @@ class DeviceDataProvider with ChangeNotifier {
   double maxPh = 0;
   double averagePh = 0;
 
+  static const int PAST_DATA_SMALL_GRAPH = 16; // 4 readings per hours, 4 hours of data
+
 
   Stream<BluetoothDeviceState> streamDeviceState() {
     deviceName = device.name;
@@ -55,6 +57,7 @@ class DeviceDataProvider with ChangeNotifier {
     if (!receivingData) {
       if(averagePh == 0){
         await getDailyStatsFromDB();
+        await getPastDataFromDB();
       }
       receivingData = true;
       connectDisconnectButtonText = "Disconnect";
@@ -68,6 +71,16 @@ class DeviceDataProvider with ChangeNotifier {
 
       rx.setNotifyValue(true);
     }
+  }
+
+  Future<void> getPastDataFromDB() async{
+    List<Map<String, dynamic>> queryResult = await DatabaseProvider.db
+                                          .getLastNRows(PAST_DATA_SMALL_GRAPH);
+    queryResult.forEach((row){
+      DataModel dataModel = DataModel.fromMap(row);
+      allData.insert(0, dataModel);
+      pHData.add(AreaChartData.fromLiveData(dataModel.timeStamp.toLocal(), dataModel.pH));
+    });
   }
 
   Future<void> getDailyStatsFromDB() async {
@@ -129,6 +142,7 @@ class DeviceDataProvider with ChangeNotifier {
   void displayData(DataModel dataModel, DateTime nowLocal) {
     allData.insert(0, dataModel);
     pHData.add(AreaChartData.fromLiveData(nowLocal, dataModel.pH));
+    print("Amount of data:  ${pHData.length}");
     calculateMinMaxAndAveragePH(dataModel.pH);
   }
 

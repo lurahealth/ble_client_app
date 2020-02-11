@@ -51,7 +51,7 @@ class DatabaseProvider {
 
   Future<List<Map<String, dynamic>>> getLastNRows(int n) async {
     final db = await database;
-    String query = "SELECT * FROM $TABLE_NAME ORDER BY DECS LIMIT $n";
+    String query = "SELECT * FROM $TABLE_NAME ORDER BY $ROW_ID DESC LIMIT $n";
     print(query);
     return await db.rawQuery(query);
   }
