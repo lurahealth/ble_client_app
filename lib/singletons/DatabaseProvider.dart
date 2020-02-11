@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseProvider {
 
-  int CURRENT_DB_VERSION = 1;
+  static const int CURRENT_DB_VERSION = 1;
   // No v2 OR V3 because I screwed up the update.
   // Change log for v4: Adding the device_id column
 
@@ -42,9 +42,26 @@ class DatabaseProvider {
   }
 
   Future<List<Map<String, dynamic>>> getDataByDateRange(int from, int to) async {
-
     final db = await database;
-    String query = "SELECT * FROM ${TABLE_NAME} WHERE ${TIME_STAMP} >= $from and ${TIME_STAMP} <= $to";
+    String query = "SELECT * FROM $TABLE_NAME "
+                   "WHERE $TIME_STAMP >= $from and $TIME_STAMP <= $to";
+    print(query);
+    return await db.rawQuery(query);
+  }
+
+  Future<List<Map<String, dynamic>>> getLastNRows(int n) async {
+    final db = await database;
+    String query = "SELECT * FROM $TABLE_NAME ORDER BY DECS LIMIT $n";
+    print(query);
+    return await db.rawQuery(query);
+  }
+
+  Future<List<Map<String, dynamic>>> getDailyStatsByDeviceName(int from, int to, String deviceName) async {
+    final db = await database;
+    String query = "SELECT avg($PH) AS average, min($PH) AS min, max($PH) AS max "
+                   "FROM $TABLE_NAME "
+                   "WHERE $TIME_STAMP >= $from and $TIME_STAMP <= $to "
+                      "and $DEVICE_ID = '$deviceName'";
     print(query);
     return await db.rawQuery(query);
   }

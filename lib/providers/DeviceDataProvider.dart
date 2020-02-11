@@ -31,27 +31,13 @@ class DeviceDataProvider with ChangeNotifier {
   BluetoothCharacteristic rx;
 
   double currentPh = 0;
-  double minPh = 10000;
+  double minPh = 0;
   double maxPh = 0;
   double averagePh = 0;
 
 
-
   Stream<BluetoothDeviceState> streamDeviceState() {
-    if (device != null) {
-      deviceName = device.name;
-      return connectToDevice();
-    } else {
-      // scan for the device and try to find it by the device name we have
-
-      // if we find it, set the device name
-
-      // and then connection to it.
-
-    }
-  }
-
-  Stream<BluetoothDeviceState> connectToDevice() {
+    deviceName = device.name;
     device.connect(timeout: Duration(seconds: 200), autoConnect: false);
     return device.state;
   }
@@ -67,6 +53,9 @@ class DeviceDataProvider with ChangeNotifier {
 
   Future<void> getData() async {
     if (!receivingData) {
+      if(averagePh == 0){
+        await getDailyStatsFromDB();
+      }
       receivingData = true;
       connectDisconnectButtonText = "Disconnect";
       notifyListeners();
@@ -81,13 +70,26 @@ class DeviceDataProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getDailyStatsFromDB() async {
+    final DateTime nowLocal = DateTime.now();
+    final lastMidnight = new DateTime(nowLocal.year, nowLocal.month, nowLocal.day);
+    List<Map<String, dynamic>> queryResult = await DatabaseProvider.db
+        .getDailyStatsByDeviceName(
+        lastMidnight.millisecondsSinceEpoch, nowLocal.millisecondsSinceEpoch, deviceName);
+    Map<String, dynamic> statsMap = queryResult[0];
+    averagePh = statsMap["average"];
+    minPh = statsMap["min"];
+    maxPh = statsMap["max"];
+    print("Average ph: $averagePh min pH: $minPh max ph: $maxPh");
+  }
+
   void onDataReceived(List<int> value) {
-    DateTime nowLocal = DateTime.now();
-    DateTime nowUTC = nowLocal.toUtc();
-    String data = utf8.decode(value);
+    final DateTime nowLocal = DateTime.now();
+    final DateTime nowUTC = nowLocal.toUtc();
+    final String data = utf8.decode(value);
 //    print("Raw Data $value");
     if (data.contains(",")) {
-      DataModel dataModel =
+      final DataModel dataModel =
           DataModel.fromRawDataString(data, notes, deviceName, nowUTC);
 //      print(dataModel.toString());
       saveDataInLocalDatabase(dataModel);
