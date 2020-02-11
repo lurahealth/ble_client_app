@@ -13,7 +13,8 @@ class FullScreenGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: FittedBox(
+        fit: BoxFit.fill,
         child: Stack(
           children: <Widget>[
             Hero(tag: PH_GRAPH, child: PHGraph(provider)),

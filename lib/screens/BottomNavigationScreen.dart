@@ -50,6 +50,11 @@ class BottomNavigationWidget extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: LURA_BLUE,
+          title: SizedBox(
+            height: 30,
+              child: Image.asset("images/logo.png")
+          ),
+          centerTitle: true,
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),

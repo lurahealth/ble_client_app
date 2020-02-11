@@ -36,19 +36,22 @@ class MainUIWidget extends StatelessWidget {
       backgroundColor: LURA_BLUE,
         body: Column(
       children: <Widget>[
-        Expanded(
-          child: Card(
+        Visibility(
+          visible: !provider.fullScreenGraph,
+          child: Expanded(
+            child: Card(
 //              borderOnForeground: true,
-            elevation: 16,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Center(child: pHStaticText),
-                Center(child: currentPh),
-                dailyStatsWidget,
-                buttonRow,
-              ],
+              elevation: 16,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Center(child: pHStaticText),
+                  Center(child: currentPh),
+                  dailyStatsWidget,
+                  buttonRow,
+                ],
+              ),
             ),
           ),
         ),
@@ -65,8 +68,7 @@ class MainUIWidget extends StatelessWidget {
                 onPressed: () {
                   AutoOrientation.landscapeAutoMode();
 
-                  Navigator.pushNamed(context, FULL_SCREEN_GRAPH,
-                      arguments: provider);
+                  provider.toggleFullScreenGraph();
                 },
               ),
             ),

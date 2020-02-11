@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:ble_client_app/models/DataModel.dart';
 import 'package:ble_client_app/models/AreaChartData.dart';
@@ -22,6 +23,7 @@ class DeviceDataProvider with ChangeNotifier {
   DateTime max = currentTime.add(Duration(seconds: 20));
   double animationDuration = 0;
   int currentScreen = 0;
+  bool fullScreenGraph = false;
 
   List<DataModel> allData = <DataModel>[];
   List<AreaChartData> pHData = <AreaChartData>[];
@@ -130,8 +132,8 @@ class DeviceDataProvider with ChangeNotifier {
         max = min.add(Duration(seconds: width));
       }
     } else {
-      max = allData.first.timeStamp.toLocal();
-      min = max.subtract(Duration(seconds: width));
+      max = nowLocal.subtract(Duration(seconds: 16));
+      min = nowLocal.add(Duration(seconds: 8));
     }
   }
 
@@ -142,7 +144,6 @@ class DeviceDataProvider with ChangeNotifier {
   void displayData(DataModel dataModel, DateTime nowLocal) {
     allData.insert(0, dataModel);
     pHData.add(AreaChartData.fromLiveData(nowLocal, dataModel.pH));
-    print("Amount of data:  ${pHData.length}");
     calculateMinMaxAndAveragePH(dataModel.pH);
   }
 
@@ -196,6 +197,16 @@ class DeviceDataProvider with ChangeNotifier {
   void onBottomNavigationBarTapped(int value) {
 //    print("Tapped $value");
     currentScreen = value;
+    notifyListeners();
+  }
+
+  void toggleFullScreenGraph() {
+    if(fullScreenGraph){
+      fullScreenGraph = false;
+    }else{
+      fullScreenGraph = true;
+    }
+
     notifyListeners();
   }
 }
