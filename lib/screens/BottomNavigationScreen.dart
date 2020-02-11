@@ -1,11 +1,7 @@
 import 'package:ble_client_app/providers/DeviceDataProvider.dart';
-import 'package:ble_client_app/widget/ColumnHeaderWidget.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/DataTableScreen.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/MainUIWidget.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
-import 'package:ble_client_app/widget/graphs/PHGraph.dart';
-import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenButtonRow.dart';
-import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenDailyStatsWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -18,13 +14,8 @@ class BottomNavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeviceDataProvider provider;
-    if (device != null) {
-      provider = DeviceDataProvider(device: device);
-    } else {
-      provider = DeviceDataProvider();
-    }
 
+    final DeviceDataProvider provider = DeviceDataProvider(device);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -65,8 +56,7 @@ class BottomNavigationWidget extends StatelessWidget {
               child: Icon(
                 Icons.bluetooth,
                 color: (deviceState == BluetoothDeviceState.connected)
-                    ? Colors
-                        .lightGreenAccent // if connected to device, show green
+                    ? Colors.lightGreenAccent // if connected to device, show green
                     : Colors.red, // else show red
               ),
             )

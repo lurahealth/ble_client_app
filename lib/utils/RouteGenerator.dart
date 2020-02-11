@@ -12,12 +12,7 @@ class RouteGenerator {
       case DEVICE_SCAN_SCREEN:
         return MaterialPageRoute(builder: (_) => DeviceScanScreen());
       case BOTTOM_NAVIGATION_SCREEN:
-        return MaterialPageRoute(builder: (_) {
-          if (args != null)
-            return BottomNavigationScreen(device: args);
-          else
-            return BottomNavigationScreen();
-        });
+        return MaterialPageRoute(builder: (_) => BottomNavigationScreen(device: args));
       case FULL_SCREEN_GRAPH:
         return MaterialPageRoute(builder: (_) => FullScreenGraph(args));
       default:

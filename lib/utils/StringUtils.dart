@@ -42,11 +42,11 @@ import 'package:intl/intl.dart';
   final TextStyle style = TextStyle(fontSize: 15);
 
   // Secure Storage Keys
-  String BLE_DEVICE_NAME = "ble_device_name";
+  String SAVED_BLE_DEVICE_NAME = "ble_device_name";
   
   //Routes 
   const BOTTOM_NAVIGATION_SCREEN = "/bottonNavigatinoScreen";
-  const DEVICE_SCAN_SCREEN = "/deviceScanScreen";
+  const DEVICE_SCAN_SCREEN = "/";
   const FULL_SCREEN_GRAPH ="/fullScreenGraph";
 
   //TAGs

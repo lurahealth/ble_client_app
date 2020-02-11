@@ -11,10 +11,9 @@ import 'package:flutter_blue/flutter_blue.dart';
 
 class DeviceDataProvider with ChangeNotifier {
   final BluetoothDevice device;
+  DeviceDataProvider(this.device);
+
   String deviceName;
-
-  DeviceDataProvider({this.device});
-
   bool receivingData = false;
   String notes;
   int width = 20; // seconds
