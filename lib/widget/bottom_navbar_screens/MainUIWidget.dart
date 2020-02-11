@@ -33,25 +33,30 @@ class MainUIWidget extends StatelessWidget {
     final PHGraph graph = PHGraph(provider);
 
     return Scaffold(
+      backgroundColor: LURA_BLUE,
         body: Column(
       children: <Widget>[
         Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Center(child: pHStaticText),
-              Center(child: currentPh),
-              dailyStatsWidget,
-              buttonRow,
-            ],
+          child: Card(
+//              borderOnForeground: true,
+            elevation: 16,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Center(child: pHStaticText),
+                Center(child: currentPh),
+                dailyStatsWidget,
+                buttonRow,
+              ],
+            ),
           ),
         ),
         Stack(
           children: <Widget>[
             graph,
             Align(
-              alignment: Alignment.topRight ,
+              alignment: Alignment.topRight,
               child: IconButton(
                 icon: Icon(
                   Icons.fullscreen,

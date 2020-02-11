@@ -23,9 +23,11 @@ class PHGraph extends StatelessWidget {
               minimum: provider.min,
               maximum: provider.max,
               axisLine: AxisLine(color: LURA_BLUE),
+              labelStyle: ChartTextStyle(color: Colors.white),
               majorGridLines: MajorGridLines(color: LURA_BLUE)),
           primaryYAxis: NumericAxis(
             majorGridLines: MajorGridLines(color: LURA_BLUE),
+            labelStyle: ChartTextStyle(color: Colors.white),
             axisLine: AxisLine(color: LURA_BLUE),
           ),
           crosshairBehavior: CrosshairBehavior(
