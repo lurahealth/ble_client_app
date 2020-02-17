@@ -12,9 +12,9 @@ class MainUIScreenDailyStatsWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        dataWidget("Todays Lowest pH", provider.minPh.round()),
-        dataWidget("Todays Highest pH", provider.maxPh.round()),
-        dataWidget("Todays Average pH", provider.averagePh.round() )
+        dataWidget("Todays Lowest pH", provider.minPh?.round() ?? 0),
+        dataWidget("Todays Highest pH", provider.maxPh?.round() ?? 0),
+        dataWidget("Todays Average pH", provider.averagePh?.round() ?? 0)
       ],
     );
   }

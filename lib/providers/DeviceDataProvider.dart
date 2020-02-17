@@ -60,10 +60,10 @@ class DeviceDataProvider with ChangeNotifier {
   Future<void> getData() async {
     if (!receivingData) {
       receivingData = true;
-//      if(averagePh == 0){
-//        await getDailyStatsFromDB();
+      if(averagePh == 0){
+        await getDailyStatsFromDB();
 //        await getPastDataFromDB();
-//      }
+      }
 
       connectDisconnectButtonText = "Disconnect";
       notifyListeners();
