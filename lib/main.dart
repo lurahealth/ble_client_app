@@ -1,5 +1,6 @@
 import 'package:ble_client_app/utils/RouteGenerator.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
+import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -11,8 +12,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-            primarySwatch: Colors.indigo,
-            accentColor: Colors.deepOrangeAccent
+            primaryColor: LURA_BLUE,
+            accentColor: LURA_ORANGE
         ),
         initialRoute: DEVICE_SCAN_SCREEN,
         onGenerateRoute: RouteGenerator.generateRoute
