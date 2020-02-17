@@ -1,17 +1,13 @@
-import 'package:auto_orientation/auto_orientation.dart';
 import 'package:ble_client_app/providers/DeviceDataProvider.dart';
-import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:ble_client_app/widget/graphs/PHGraph.dart';
 import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenButtonRow.dart';
 import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenDailyStatsWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
-import 'package:provider/provider.dart';
 
 class MainUIWidget extends StatelessWidget {
-  DeviceDataProvider provider;
+  final DeviceDataProvider provider;
 
   MainUIWidget(this.provider);
 
@@ -33,48 +29,48 @@ class MainUIWidget extends StatelessWidget {
     final PHGraph graph = PHGraph(provider);
 
     return Scaffold(
-      backgroundColor: LURA_BLUE,
+        backgroundColor: LURA_BLUE,
         body: Column(
-      children: <Widget>[
-        Visibility(
-          visible: !provider.fullScreenGraph,
-          child: Expanded(
-            child: Card(
-//              borderOnForeground: true,
-              elevation: 16,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Visibility(
+              visible: !provider.fullScreenGraph,
+              child: Expanded(
+                child: Material(
+                  elevation: 18,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      pHStaticText,
+                      currentPh,
+                      dailyStatsWidget,
+                      buttonRow,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Stack(
                 children: <Widget>[
-                  Center(child: pHStaticText),
-                  Center(child: currentPh),
-                  dailyStatsWidget,
-                  buttonRow,
+                  graph,
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.fullscreen,
+                          color: LURA_ORANGE,
+                        ),
+                        onPressed: provider.toggleFullScreenGraph,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-        ),
-        Stack(
-          children: <Widget>[
-            graph,
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                icon: Icon(
-                  Icons.fullscreen,
-                  color: LURA_ORANGE,
-                ),
-                onPressed: () {
-                  AutoOrientation.landscapeAutoMode();
-
-                  provider.toggleFullScreenGraph();
-                },
-              ),
-            ),
           ],
-        ),
-      ],
-    ));
+        ));
   }
 }

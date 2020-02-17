@@ -12,6 +12,14 @@ class NetworkCommon {
 
   NetworkCommon._internal();
 
+  Dio get dio {
+    Dio dio = new Dio();
+    // handle timeouts
+    dio.options.connectTimeout = 20000; //5s
+    dio.options.receiveTimeout = 20000;
+    return dio;
+  }
+
   final JsonDecoder _decoder = new JsonDecoder();
 
   dynamic decodeResp(d) {
@@ -28,13 +36,5 @@ class NetworkCommon {
     } else {
       return jsonBody;
     }
-  }
-
-  Dio get dio {
-    Dio dio = new Dio();
-    // handle timeouts
-    dio.options.connectTimeout = 20000; //5s
-    dio.options.receiveTimeout = 20000;
-    return dio;
   }
 }

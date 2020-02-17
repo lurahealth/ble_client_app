@@ -8,8 +8,6 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseProvider {
 
   static const int CURRENT_DB_VERSION = 1;
-  // No v2 OR V3 because I screwed up the update.
-  // Change log for v4: Adding the device_id column
 
   static Database _database;
   static final DatabaseProvider db = DatabaseProvider._();

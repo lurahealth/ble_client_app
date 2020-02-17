@@ -11,45 +11,40 @@ class PHGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        SfCartesianChart(
-          plotAreaBorderColor: LURA_BLUE,
-          borderColor: LURA_BLUE,
-          backgroundColor: LURA_BLUE,
-          // Initialize category axis
-          primaryXAxis: DateTimeAxis(
-              minimum: provider.min,
-              maximum: provider.max,
-              axisLine: AxisLine(color: LURA_BLUE),
-              labelStyle: ChartTextStyle(color: Colors.white),
-              majorGridLines: MajorGridLines(color: LURA_BLUE)),
-          primaryYAxis: NumericAxis(
-            majorGridLines: MajorGridLines(color: LURA_BLUE),
-            labelStyle: ChartTextStyle(color: Colors.white),
-            axisLine: AxisLine(color: LURA_BLUE),
-          ),
-          crosshairBehavior: CrosshairBehavior(
-            lineColor: Colors.white,
-            enable: true,
-            activationMode: ActivationMode.singleTap,
-          ),
+    return SfCartesianChart(
+      plotAreaBorderColor: LURA_BLUE,
+      borderColor: LURA_BLUE,
+      backgroundColor: LURA_BLUE,
+      // Initialize category axis
+      primaryXAxis: DateTimeAxis(
+          minimum: provider.min,
+          maximum: provider.max,
+          axisLine: AxisLine(color: LURA_BLUE),
+          labelStyle: ChartTextStyle(color: Colors.white),
+          majorGridLines: MajorGridLines(color: LURA_BLUE)),
+      primaryYAxis: NumericAxis(
+        majorGridLines: MajorGridLines(color: LURA_BLUE),
+        labelStyle: ChartTextStyle(color: Colors.white),
+        axisLine: AxisLine(color: LURA_BLUE),
+      ),
+      crosshairBehavior: CrosshairBehavior(
+        lineColor: Colors.white,
+        enable: true,
+        activationMode: ActivationMode.singleTap,
+      ),
 //          trackballBehavior: TrackballBehavior(
 //              enable: true,
 //              activationMode: ActivationMode.singleTap,
 //          ),
-          zoomPanBehavior: ZoomPanBehavior(
-            enablePinching: false,
-            enablePanning: false,
-          ),
-          series: <ChartSeries>[
-            GraphDataUtils.getAreaChartDate(
-                provider.pHData, Colors.white, provider.animationDuration),
-          ],
-          selectionType: SelectionType.point,
-        ),
+      zoomPanBehavior: ZoomPanBehavior(
+        enablePinching: false,
+        enablePanning: false,
+      ),
+      series: <ChartSeries>[
+        GraphDataUtils.getAreaChartDate(
+            provider.pHData, Colors.white, provider.animationDuration),
       ],
+      selectionType: SelectionType.point,
     );
   }
 }

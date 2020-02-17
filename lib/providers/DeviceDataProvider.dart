@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:auto_orientation/auto_orientation.dart';
 import 'package:ble_client_app/models/DataModel.dart';
 import 'package:ble_client_app/models/AreaChartData.dart';
 import 'package:ble_client_app/singletons/BluetoothUtils.dart';
@@ -24,6 +25,7 @@ class DeviceDataProvider with ChangeNotifier {
   double animationDuration = 0;
   int currentScreen = 0;
   bool fullScreenGraph = false;
+  Icon graphIcon = Icon(Icons.fullscreen);
 
   List<DataModel> allData = <DataModel>[];
   List<AreaChartData> pHData = <AreaChartData>[];
@@ -57,11 +59,12 @@ class DeviceDataProvider with ChangeNotifier {
 
   Future<void> getData() async {
     if (!receivingData) {
+      receivingData = true;
       if(averagePh == 0){
         await getDailyStatsFromDB();
-        await getPastDataFromDB();
+//        await getPastDataFromDB();
       }
-      receivingData = true;
+
       connectDisconnectButtonText = "Disconnect";
       notifyListeners();
       print("getting data");
@@ -203,10 +206,13 @@ class DeviceDataProvider with ChangeNotifier {
   void toggleFullScreenGraph() {
     if(fullScreenGraph){
       fullScreenGraph = false;
+      AutoOrientation.portraitAutoMode();
+      graphIcon = Icon(Icons.fullscreen);
     }else{
       fullScreenGraph = true;
+      AutoOrientation.landscapeAutoMode();
+      graphIcon = Icon(Icons.fullscreen_exit);
     }
-
     notifyListeners();
   }
 }
