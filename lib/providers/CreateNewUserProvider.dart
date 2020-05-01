@@ -93,8 +93,19 @@ class CreateNewUserProvider with ChangeNotifier{
   Future<void> createNewUserButton(BuildContext context) async {
     if(patientNameValid && patientEmailValid &&
        patientPasswordValid && patientPasswordConfirmValid){
-       await CognitoUserSingleton.instance.registerNewPatient(patientEmail, patientName, patientPassword);
-       print("Patinet registered!");
+       CognitoUserSingleton.instance.registerNewPatient(patientEmail, patientName, patientPassword)
+                          .then((response) 
+       {
+         Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
+       }, 
+           onError: newUserCreationError);
+           print("Patinet registered!");
     }
+  }
+
+  void newUserCreationError(error){
+    print(error);
+    error = true;
+    errorMessage = error.toString();
   }
 }

@@ -62,6 +62,7 @@ const String PASSWORD_CHANGE_SUCCESS = "password_reset_success";
 const String PASSWORD_CHANGE_FAILED = "password_reset_failed";
 const String PASSWORD_RESET_FAILED = "passowrd_rest_dailed";
 const String USER_NOT_CONFIRMED = "User is not confirmed.";
+const String NEW_USER_CREATED = "New user created";
 
 // Password regex
 const String PASSWORD_REGEX =
