@@ -26,6 +26,22 @@ class LoginWidget extends StatelessWidget {
           fontWeight: FontWeight.bold, fontSize: 30, color: LURA_BLUE),
     );
 
+    final titleBlock = Container(
+      height: MediaQuery.of(context).size.height * 0.20,
+      decoration: BoxDecoration(
+          color: LURA_BLUE,
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(32),
+              bottomRight: Radius.circular(32))),
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Image.asset("images/logo.png"),
+          ],
+        ),
+      )
+    );
+
     final emailTextField = textField(LOGIN_SCREEN_EMAIL_HINT,
         LOGIN_SCREEN_EMAIL_LABEL,
         TextInputType.emailAddress,
@@ -87,13 +103,34 @@ class LoginWidget extends StatelessWidget {
     );
     
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        leading: Text("",style: LURA_BLUE_TEXT, // used to get rid of the random back arrow that keeps poping up
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          emailTextField,
-          passwordTextField,
-          loginButton,
-          Spacer(),
+          titleBlock,
+          SizedBox(height: MediaQuery.of(context).size.height*0.08 ,),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: emailTextField,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: passwordTextField,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: loginButton,
+                ),
+              ],
+            ),
+          ),
           newAccountButton
         ],
       ),

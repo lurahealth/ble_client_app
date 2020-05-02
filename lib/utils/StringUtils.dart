@@ -45,7 +45,7 @@ String SAVED_BLE_DEVICE_NAME = "ble_device_name";
 
 //Routes
 const BOTTOM_NAVIGATION_SCREEN = "/bottonNavigatinoScreen";
-const DEVICE_SCAN_SCREEN = "/";
+const DEVICE_SCAN_SCREEN = "/deviceScanScreen";
 const FULL_SCREEN_GRAPH = "/fullScreenGraph";
 const LOGIN_SCREEN = "/loginScreen";
 const CONFIRM_USER_SCREEN = "/userConfirmScreen";

@@ -8,6 +8,7 @@ const Color LURA_ORANGE = Colors.deepOrangeAccent;
 // TextStyle
 const TextStyle WHITE_TEXT = TextStyle(color: Colors.white);
 const TextStyle ERROR_TEXT = TextStyle(color: Colors.redAccent, fontSize: 13);
+const TextStyle LURA_BLUE_TEXT = TextStyle(color: LURA_BLUE);
 
 Column textField(String hint, String label, TextInputType inputType,
     Function onChangeListener, bool textValid, String errorText, IconData prefixIcon,

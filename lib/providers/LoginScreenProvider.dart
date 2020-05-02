@@ -1,5 +1,6 @@
 import 'package:ble_client_app/singletons/CognitoUserSingleton.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
+import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class LoginScreenProvider with ChangeNotifier {
   bool showPassword = false;
   bool loading = false;
 
-  Icon passwordIcon = Icon(Icons.visibility_off);
+  Icon passwordIcon = Icon(Icons.visibility_off, color: LURA_ORANGE,);
 
   bool loginError = false;
   String loginErrorMessage = "";
