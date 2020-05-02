@@ -131,6 +131,7 @@ class LoginWidget extends StatelessWidget {
               ],
             ),
           ),
+          errorText,
           newAccountButton
         ],
       ),
