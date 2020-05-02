@@ -18,9 +18,9 @@ class CreateNewUserProvider with ChangeNotifier{
   bool showPassword = false;
 
   bool error = false;
-  String errorMessage;
+  String errorMessage ="";
 
-  bool loading;
+  bool loading = false;
 
   void togglePasswordVisibility() {
     if (showPassword) {
@@ -91,21 +91,23 @@ class CreateNewUserProvider with ChangeNotifier{
   }
 
   Future<void> createNewUserButton(BuildContext context) async {
-    if(patientNameValid && patientEmailValid &&
-       patientPasswordValid && patientPasswordConfirmValid){
-       CognitoUserSingleton.instance.registerNewPatient(patientEmail, patientName, patientPassword)
-                          .then((response) 
-       {
-         Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
-       }, 
-           onError: newUserCreationError);
-           print("Patinet registered!");
+    if (patientNameValid && patientEmailValid &&
+        patientPasswordValid && patientPasswordConfirmValid) {
+      loading = true;
+      notifyListeners();
+      CognitoUserSingleton.instance.registerNewPatient(
+          patientEmail, patientName, patientPassword)
+          .then((response) {
+        Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
+      },onError: newUserCreationError);
     }
   }
 
   void newUserCreationError(error){
-    print(error);
-    error = true;
+    loading = false;
+    print("Test Error ${error.toString()}");
+    this.error = true;
     errorMessage = error.toString();
+    notifyListeners();
   }
 }

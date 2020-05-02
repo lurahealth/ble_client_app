@@ -1,6 +1,7 @@
 import 'package:ble_client_app/providers/CreateNewUserProvider.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
+import 'package:ble_client_app/widget/LoadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -92,18 +93,43 @@ class CreateNewUserWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: ListView(
+            Visibility(
+              visible: !provider.loading,
+              child: Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    patientNameTextField,
+                    patientEmailTextField,
+                    patientPasswordTextField,
+                    confirmPasswordTextField,
+
+                  ],
+                ),
+              ),
+            ),
+            Visibility(
+              visible: !provider.loading,
+              child: Column(
                 children: <Widget>[
-                  patientNameTextField,
-                  patientEmailTextField,
-                  patientPasswordTextField,
-                  confirmPasswordTextField,
+                  Visibility(
+                    visible: provider.error,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(provider.errorMessage, style: ERROR_TEXT,),
+                    ),
+                  ),
+                  createUserButton,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: cancelButton,
+                  ),
                 ],
               ),
             ),
-            createUserButton,
-            cancelButton
+            Visibility(
+                visible: provider.loading,
+                child: LoadingWidget("Registering user", LURA_BLUE)
+            ),
           ],
         ),
       ),

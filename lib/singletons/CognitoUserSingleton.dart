@@ -90,6 +90,7 @@ class CognitoUserSingleton{
         userAttributes: userAttributes
       );
     }on CognitoClientException catch (e){
+      print("Cognito client exception");
       throw(e.message);
     }
     catch (e) {
