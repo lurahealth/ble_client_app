@@ -74,18 +74,36 @@ class CreateNewUserWidget extends StatelessWidget {
       ),
     );
 
+    final cancelButton = FlatButton(
+      onPressed: () => Navigator.pop(context),
+      child: new Text("Cancel"),
+    );
+
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: LURA_BLUE,
+        centerTitle: true,
+        title: Text("New account"),
+        leading: Text(" ",style: LURA_BLUE_TEXT,),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            patientNameTextField,
-            patientEmailTextField,
-            patientPasswordTextField,
-            confirmPasswordTextField,
-            Spacer(),
-            createUserButton
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  patientNameTextField,
+                  patientEmailTextField,
+                  patientPasswordTextField,
+                  confirmPasswordTextField,
+                ],
+              ),
+            ),
+            createUserButton,
+            cancelButton
           ],
         ),
       ),

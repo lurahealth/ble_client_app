@@ -47,3 +47,13 @@ Column textField(String hint, String label, TextInputType inputType,
     ],
   );
 }
+
+AppBar getStandardAppBar(BuildContext context, {List<Widget> actions}){
+  return AppBar(
+      elevation: 0,
+      backgroundColor: LURA_BLUE,
+      actions: actions,
+      centerTitle: true,
+      title: Image.asset("images/logo.png"),
+  );
+}

@@ -27,7 +27,7 @@ class LoginWidget extends StatelessWidget {
     );
 
     final titleBlock = Container(
-      height: MediaQuery.of(context).size.height * 0.20,
+      height: MediaQuery.of(context).size.height * 0.30,
       decoration: BoxDecoration(
           color: LURA_BLUE,
           borderRadius: BorderRadius.only(
@@ -124,6 +124,7 @@ class LoginWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: passwordTextField,
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height*0.04 ,),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: loginButton,
