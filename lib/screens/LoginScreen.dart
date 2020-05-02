@@ -36,6 +36,7 @@ class LoginWidget extends StatelessWidget {
       child: Center(
         child: Column(
           children: <Widget>[
+            SizedBox(height: MediaQuery.of(context).size.height*0.06 ,),
             Image.asset("images/logo.png"),
           ],
         ),
@@ -111,11 +112,11 @@ class LoginWidget extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          titleBlock,
-          SizedBox(height: MediaQuery.of(context).size.height*0.08 ,),
           Expanded(
             child: ListView(
               children: <Widget>[
+                titleBlock,
+                SizedBox(height: MediaQuery.of(context).size.height*0.08 ,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: emailTextField,
