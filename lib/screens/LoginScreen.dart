@@ -19,28 +19,24 @@ class LoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final LoginScreenProvider provider = Provider.of<LoginScreenProvider>(context);
-
-    final title = Text(
-      LOGIN_SCREEN_TITLE,
-      style: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 30, color: LURA_BLUE),
-    );
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     final titleBlock = Container(
-      height: MediaQuery.of(context).size.height * 0.30,
-      decoration: BoxDecoration(
-          color: LURA_BLUE,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(32),
-              bottomRight: Radius.circular(32))),
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: MediaQuery.of(context).size.height*0.06 ,),
-            Image.asset("images/logo.png"),
-          ],
-        ),
-      )
+        height: height * 0.25,
+        decoration: BoxDecoration(
+            color: LURA_BLUE,
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(32),
+                bottomRight: Radius.circular(32))),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+//              SizedBox(height: MediaQuery.of(context).size.height*0.06 ,),
+              Image.asset("images/logo.png"),
+            ],
+          ),
+        )
     );
 
     final emailTextField = textField(LOGIN_SCREEN_EMAIL_HINT,
@@ -77,7 +73,6 @@ class LoginWidget extends StatelessWidget {
       elevation: 5.0,
       color: LURA_BLUE,
       child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () => provider.loginUser(context),
         child: Row(
@@ -116,25 +111,28 @@ class LoginWidget extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 titleBlock,
-                SizedBox(height: MediaQuery.of(context).size.height*0.08 ,),
+                SizedBox(height: height*0.08 ,),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: emailTextField,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: passwordTextField,
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height*0.04 ,),
+                SizedBox(height: height*0.04 ,),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: loginButton,
                 ),
               ],
             ),
           ),
           errorText,
-          newAccountButton
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: newAccountButton,
+          )
         ],
       ),
     );

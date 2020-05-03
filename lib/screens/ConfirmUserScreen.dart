@@ -20,6 +20,8 @@ class ConfirmUserWidget extends StatelessWidget {
 
     final ConfirmUserScreenProvider provider = Provider.of<ConfirmUserScreenProvider>(context);
 
+    final titleText = Text("Please enter the 7 digit code sent to your email address");
+
     final confirmCodeTextField = TextField(
       onChanged: provider.checkConfirmationCode,
     );
@@ -55,10 +57,17 @@ class ConfirmUserWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
+            child: titleText,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
             child: confirmCodeTextField,
           ),
-          confirmButton
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: confirmButton,
+          )
         ],
       ),
     );
