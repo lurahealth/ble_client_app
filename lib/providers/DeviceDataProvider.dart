@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:ble_client_app/models/DataModel.dart';
 import 'package:ble_client_app/models/AreaChartData.dart';
 import 'package:ble_client_app/singletons/BluetoothUtils.dart';
+import 'package:ble_client_app/singletons/CognitoUserSingleton.dart';
 import 'package:ble_client_app/singletons/DatabaseProvider.dart';
 import 'package:ble_client_app/utils/RestEndpoints.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class DeviceDataProvider with ChangeNotifier {
   final BluetoothDevice device;
   DeviceDataProvider(this.device);
 
-  String deviceName;
+//  String deviceName;
   bool receivingData = false;
   String notes;
   int width = 20; // seconds
@@ -27,6 +27,8 @@ class DeviceDataProvider with ChangeNotifier {
   bool fullScreenGraph = false;
   Icon graphIcon = Icon(Icons.fullscreen);
 
+  String currentUser;
+
   List<DataModel> allData = <DataModel>[];
   List<AreaChartData> pHData = <AreaChartData>[];
 
@@ -35,7 +37,7 @@ class DeviceDataProvider with ChangeNotifier {
   BluetoothCharacteristic rx;
 
   double currentPh = 0;
-  double minPh = 0;
+  double minPh = -500;
   double maxPh = 0;
   double averagePh = 0;
 
@@ -43,7 +45,7 @@ class DeviceDataProvider with ChangeNotifier {
 
 
   Stream<BluetoothDeviceState> streamDeviceState() {
-    deviceName = device.name;
+//    deviceName = device.name;
     device.connect(timeout: Duration(seconds: 200), autoConnect: false);
     return device.state;
   }
@@ -61,8 +63,8 @@ class DeviceDataProvider with ChangeNotifier {
     if (!receivingData) {
       receivingData = true;
       if(averagePh == 0){
+        await setCurrentUser();
         await getDailyStatsFromDB();
-//        await getPastDataFromDB();
       }
 
       connectDisconnectButtonText = "Disconnect";
@@ -77,6 +79,12 @@ class DeviceDataProvider with ChangeNotifier {
       rx.setNotifyValue(true);
     }
   }
+
+  Future<void> setCurrentUser() async {
+    currentUser = await CognitoUserSingleton.instance.getCurrentUserEmail();
+  }
+
+
 
   Future<void> getPastDataFromDB() async{
     List<Map<String, dynamic>> queryResult = await DatabaseProvider.db
@@ -93,11 +101,11 @@ class DeviceDataProvider with ChangeNotifier {
     final lastMidnight = new DateTime(nowLocal.year, nowLocal.month, nowLocal.day);
     List<Map<String, dynamic>> queryResult = await DatabaseProvider.db
         .getDailyStatsByDeviceName(
-        lastMidnight.millisecondsSinceEpoch, nowLocal.millisecondsSinceEpoch, deviceName);
+        lastMidnight.millisecondsSinceEpoch, nowLocal.millisecondsSinceEpoch, currentUser);
     Map<String, dynamic> statsMap = queryResult[0];
-    averagePh = statsMap["average"];
-    minPh = statsMap["min"];
-    maxPh = statsMap["max"];
+    averagePh = statsMap["average"] ?? 0;
+    minPh = statsMap["min"] ?? -500;
+    maxPh = statsMap["max"] ?? 0;
     print("Average ph: $averagePh min pH: $minPh max ph: $maxPh");
   }
 
@@ -105,11 +113,11 @@ class DeviceDataProvider with ChangeNotifier {
     final DateTime nowLocal = DateTime.now();
     final DateTime nowUTC = nowLocal.toUtc();
     final String data = utf8.decode(value);
-//    print("Raw Data $value");
+    print("Raw Data $value");
     if (data.contains(",")) {
       final DataModel dataModel =
-          DataModel.fromRawDataString(data, notes, deviceName, nowUTC);
-//      print(dataModel.toString());
+          DataModel.fromRawDataString(data, notes, currentUser, nowUTC);
+      print(dataModel.toString());
       saveDataInLocalDatabase(dataModel);
       displayData(dataModel, nowLocal);
       uploadData(dataModel);
@@ -156,7 +164,7 @@ class DeviceDataProvider with ChangeNotifier {
       maxPh = currentPh;
     }
 
-    if(currentPh < minPh){
+    if(currentPh < minPh || minPh == -500){
       minPh = currentPh;
     }
     averagePh = calculateNewAverage();

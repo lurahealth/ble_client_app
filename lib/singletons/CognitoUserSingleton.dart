@@ -115,4 +115,16 @@ class CognitoUserSingleton{
 
     return registrationConfirmed;
   }
+
+
+  Future<String> getCurrentUserEmail() async {
+
+    print("Setting current user email");
+
+    List<CognitoUserAttribute> attributes = await _cognitoUser
+        .getUserAttributes();
+
+    CognitoUserAttribute emailUserAttribute = attributes.firstWhere((attribute) => attribute.name == "email" );
+    return emailUserAttribute.value;
+  }
 }

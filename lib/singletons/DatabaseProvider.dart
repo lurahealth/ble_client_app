@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseProvider {
 
-  static const int CURRENT_DB_VERSION = 1;
+  static const int CURRENT_DB_VERSION = 2;
 
   static Database _database;
   static final DatabaseProvider db = DatabaseProvider._();
@@ -54,12 +54,12 @@ class DatabaseProvider {
     return await db.rawQuery(query);
   }
 
-  Future<List<Map<String, dynamic>>> getDailyStatsByDeviceName(int from, int to, String deviceName) async {
+  Future<List<Map<String, dynamic>>> getDailyStatsByDeviceName(int from, int to, String userName) async {
     final db = await database;
     String query = "SELECT avg($PH) AS average, min($PH) AS min, max($PH) AS max "
                    "FROM $TABLE_NAME "
                    "WHERE $TIME_STAMP >= $from and $TIME_STAMP <= $to "
-                      "and $DEVICE_ID = '$deviceName'";
+                      "and $USER_NAME = '$userName'";
     print(query);
     return await db.rawQuery(query);
   }

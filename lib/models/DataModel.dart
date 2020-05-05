@@ -8,7 +8,7 @@ class DataModel{
   final num connectionTime;
   final DateTime timeStamp;
   final String notes;
-  final String deviceId;
+  final String userName;
   final bool uploaded;
 
   DataModel(this.pH,
@@ -17,7 +17,7 @@ class DataModel{
             this.connectionTime,
             this.timeStamp,
             this.notes,
-            this.deviceId,
+            this.userName,
             this.uploaded);
 
   Map<String, dynamic> toMap(){
@@ -28,14 +28,14 @@ class DataModel{
       CONNETION_TIME: connectionTime,
       TIME_STAMP: timeStamp.millisecondsSinceEpoch,
       NOTES: notes,
-      DEVICE_ID: deviceId,
+      USER_NAME: userName,
       UPLOADED: uploaded? 1:0 // 1 if uploaded, else 0
     };
   }
 
   String toString(){
     return "TimeStamp: ${timeStamp.toIso8601String()} pH: $pH Voltage: $battery"
-           "Temparature: $temperature Device id: $deviceId";
+           "Temparature: $temperature User name: $userName";
   }
 
   factory DataModel.fromMap(Map<String, dynamic> map){
@@ -46,13 +46,13 @@ class DataModel{
       map[CONNETION_TIME],
       DateTime.fromMillisecondsSinceEpoch(map[TIME_STAMP]),
       map[NOTES],
-      map[DEVICE_ID],
+      map[USER_NAME],
       (map[UPLOADED] == 1)? true:false
     );
   }
 
   factory DataModel.fromRawDataString(String data, String notes,
-                                      String deviceName, DateTime nowUTC){
+                                      String currentUser, DateTime nowUTC){
     List<String> readings = data.split(",");
     return DataModel(
         double.parse(readings[0]),
@@ -61,7 +61,7 @@ class DataModel{
         (readings.length > 3)? double.parse(readings[3]):null,
         nowUTC,
         notes,
-        deviceName,
+        currentUser,
         true
     );
   }

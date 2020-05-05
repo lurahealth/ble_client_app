@@ -102,7 +102,7 @@ class ConfirmUserWidget extends StatelessWidget {
           ),
           Visibility(
               visible: provider.loading,
-              child: LoadingWidget(provider.loadingMessage, LURA_ORANGE),
+              child: LoadingWidget(provider.loadingMessage, LURA_BLUE),
           )
         ],
       ),

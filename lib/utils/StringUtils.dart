@@ -14,13 +14,13 @@ final String CONNETION_TIME =
     "connection_time"; // time to connect to the sensor
 final String TIME_STAMP = "time_stamp"; // time stamp of the reading in UTC
 final String NOTES = "notes"; // Note for a sensor reading
-final String DEVICE_ID = "device_id"; // Device sending the data
+final String USER_NAME = "user_name"; // User uploading the data
 final String UPLOADED =
     "uploaded"; // if sensor data has been uploaded set to 1 else set to 0
 
 final String CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME ("
     "$ROW_ID INTEGER PRIMARY KEY,"
-    "$DEVICE_ID TEXT,"
+    "$USER_NAME TEXT,"
     "$UPLOADED REAL,"
     "$PH REAL,"
     "$BATTERY REAL,"
@@ -28,6 +28,8 @@ final String CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME ("
     "$CONNETION_TIME INTEGER,"
     "$NOTES TEXT,"
     "$TIME_STAMP INTEGER)";
+
+
 
 // UUID
 final String UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";

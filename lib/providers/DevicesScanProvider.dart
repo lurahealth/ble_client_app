@@ -11,6 +11,13 @@ class DeviceScanProvider with ChangeNotifier {
   bool scanningComplete = false; // used to check if we should show or hide
                                 // the circular progress bar
 
+  bool bluetoothOn = false;
+
+  Stream<bool> checkBluetooth() {
+    FlutterBlue flutterBlue = FlutterBlue.instance;
+    return  flutterBlue.isOn.asStream();
+  }
+
   Future<String> scanForDevices() async {
     if (!scanning) {
       scanning = true;
