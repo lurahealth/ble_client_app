@@ -39,7 +39,7 @@ class LoginScreenProvider with ChangeNotifier {
           Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
         }
         else {
-          Navigator.popAndPushNamed(context, DEVICE_SCAN_SCREEN);
+          Navigator.pushNamedAndRemoveUntil(context, DEVICE_SCAN_SCREEN, (route) => false);
         }
       }, onError: loginFailed);
     }
