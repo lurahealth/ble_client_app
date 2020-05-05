@@ -16,6 +16,7 @@ Column textField(String hint, String label, TextInputType inputType,
   return Column(
     children: <Widget>[
       TextField(
+        keyboardType: inputType,
         obscureText: obscureText,
         onChanged: onChangeListener,
         decoration: InputDecoration(

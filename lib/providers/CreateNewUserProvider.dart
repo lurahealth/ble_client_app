@@ -1,3 +1,4 @@
+import 'package:ble_client_app/models/LoginDetails.dart';
 import 'package:ble_client_app/singletons/CognitoUserSingleton.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:email_validator/email_validator.dart';
@@ -59,7 +60,7 @@ class CreateNewUserProvider with ChangeNotifier{
   }
 
   void checkPassword(String value) {
-    value = value.trim();
+//    value = value.trim();
     RegExp passwordCheck = RegExp(PASSWORD_REGEX);
     if (value != null && value.length > 0 && passwordCheck.hasMatch(value)) {
       patientPasswordValid = true;
@@ -98,7 +99,8 @@ class CreateNewUserProvider with ChangeNotifier{
       CognitoUserSingleton.instance.registerNewPatient(
           patientEmail, patientName, patientPassword)
           .then((response) {
-        Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
+        Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN,
+                                  arguments: LoginDetails(patientEmail, patientPassword));
       },onError: newUserCreationError);
     }
   }

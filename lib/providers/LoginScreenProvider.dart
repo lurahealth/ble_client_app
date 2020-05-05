@@ -39,7 +39,7 @@ class LoginScreenProvider with ChangeNotifier {
           Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
         }
         else {
-          print("Login success");
+          Navigator.popAndPushNamed(context, DEVICE_SCAN_SCREEN);
         }
       }, onError: loginFailed);
     }

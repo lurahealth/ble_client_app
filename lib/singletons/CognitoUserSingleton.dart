@@ -107,6 +107,9 @@ class CognitoUserSingleton{
     bool registrationConfirmed = false;
     try {
       registrationConfirmed = await _cognitoUser.confirmRegistration(confirmationCode);
+    } on CognitoClientException catch (e){
+      print("Cognito client exception");
+      throw(e.message);
     } catch (e) {
       print("Error confirming user ${e.toString()}");
     }
