@@ -33,6 +33,19 @@ class DataModel{
     };
   }
 
+  Map<String, dynamic> formatForUpload(){
+    return {
+      PH: pH,
+      BATTERY: battery,
+      TEMPERATURE: temperature,
+      CONNETION_TIME: connectionTime,
+      TIME_STAMP: (timeStamp.millisecondsSinceEpoch/1000).round(),
+      NOTES: notes,
+      USER_NAME: userName,
+      UPLOADED: uploaded? 1:0 // 1 if uploaded, else 0
+    };
+  }
+
   String toString(){
     return "TimeStamp: ${timeStamp.toIso8601String()} pH: $pH Voltage: $battery"
            "Temparature: $temperature User name: $userName";
