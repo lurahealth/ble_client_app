@@ -1,4 +1,5 @@
 import 'package:ble_client_app/providers/DeviceDataProvider.dart';
+import 'package:ble_client_app/singletons/BluetoothSingleton.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/DataTableScreen.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/GraphScreenWidget.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
@@ -8,20 +9,17 @@ import 'package:flutter_blue/flutter_blue.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigationScreen extends StatelessWidget {
-  final BluetoothDevice device;
-
-  BottomNavigationScreen({this.device});
 
   @override
   Widget build(BuildContext context) {
-    final DeviceDataProvider provider = DeviceDataProvider(device);
+    final DeviceDataProvider provider = DeviceDataProvider();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => provider,
         ),
         StreamProvider(
-          create: (_) => provider.streamDeviceState(),
+          create: (_) => BluetoothSingleton.instance.streamDeviceState() ,
           initialData: BluetoothDeviceState.disconnected,
         ),
       ],
@@ -49,16 +47,22 @@ class BottomNavigationWidget extends StatelessWidget {
     final AppBar appBar = AppBar(
       // hide the app bar when we have a full screen graph
       backgroundColor: LURA_BLUE,
-      title: SizedBox(height: 30, child: Image.asset("images/logo.png")),
+      title: SizedBox(
+          height: 30,
+          child: Image.asset("images/logo.png"),
+      ),
       centerTitle: true,
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.bluetooth,
-            color: (deviceState == BluetoothDeviceState.connected)
-                ? Colors.lightGreenAccent // if connected to device, show green
-                : Colors.red, // else show red
+          child: GestureDetector(
+            onLongPress: null,
+            child: Icon(
+              Icons.bluetooth,
+              color: (deviceState == BluetoothDeviceState.connected)
+                  ? Colors.lightGreenAccent // if connected to device, show green
+                  : Colors.red, // else show red
+            ),
           ),
         )
       ],

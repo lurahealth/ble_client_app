@@ -16,7 +16,7 @@ class RouteGenerator {
       case DEVICE_SCAN_SCREEN:
         return MaterialPageRoute(builder: (_) => DeviceScanScreen());
       case BOTTOM_NAVIGATION_SCREEN:
-        return MaterialPageRoute(builder: (_) => BottomNavigationScreen(device: args));
+        return MaterialPageRoute(builder: (_) => BottomNavigationScreen());
       case CONFIRM_USER_SCREEN:
         return MaterialPageRoute(builder: (_) => ConfirmUserScreen(args));
       case NEW_USER_SCREEN:

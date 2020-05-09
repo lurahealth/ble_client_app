@@ -15,11 +15,11 @@ deleteFromSecureStorage(String key) async {
   await _flutterSecureStorage.delete(key: key);
 }
 
-saveBLEDeviceName(String deviceName) async {
-  await deleteFromSecureStorage(SAVED_BLE_DEVICE_NAME);
-  await writeToSecureStorage(SAVED_BLE_DEVICE_NAME, deviceName);
-}
-
-Future<String> getSavedDeviceName() async {
-  return await readFromSecureStorage(SAVED_BLE_DEVICE_NAME);
-}
+//saveBLEDeviceName(String deviceName) async {
+//  await deleteFromSecureStorage(SAVED_BLE_DEVICE_NAME);
+//  await writeToSecureStorage(SAVED_BLE_DEVICE_NAME, deviceName);
+//}
+//
+//Future<String> getSavedDeviceName() async {
+//  return await readFromSecureStorage(SAVED_BLE_DEVICE_NAME);
+//}

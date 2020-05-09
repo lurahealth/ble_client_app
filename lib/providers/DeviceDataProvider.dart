@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:ble_client_app/models/DataModel.dart';
 import 'package:ble_client_app/models/AreaChartData.dart';
-import 'package:ble_client_app/singletons/BluetoothUtils.dart';
+import 'package:ble_client_app/singletons/BluetoothSingleton.dart';
+import 'package:ble_client_app/utils/BluetoothUtils.dart';
 import 'package:ble_client_app/singletons/CognitoUserSingleton.dart';
 import 'package:ble_client_app/singletons/DatabaseProvider.dart';
 import 'package:ble_client_app/utils/RestEndpoints.dart';
@@ -12,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
 class DeviceDataProvider with ChangeNotifier {
-  final BluetoothDevice device;
-  DeviceDataProvider(this.device);
 
 //  String deviceName;
   bool receivingData = false;
@@ -44,15 +43,15 @@ class DeviceDataProvider with ChangeNotifier {
   static const int PAST_DATA_SMALL_GRAPH = 16; // 4 readings per hours, 4 hours of data
 
 
-  Stream<BluetoothDeviceState> streamDeviceState() {
-//    deviceName = device.name;
-    device.connect(timeout: Duration(seconds: 200), autoConnect: false);
-    return device.state;
-  }
+//  Stream<BluetoothDeviceState> streamDeviceState() {
+////    deviceName = device.name;
+////    device.connect(timeout: Duration(seconds: 200), autoConnect: false);
+//    return BluetoothSingleton.instance.connectedDevice
+//  }
 
   Future<void> disconnectFromDevice() async {
     rx.setNotifyValue(false);
-    await device.disconnect();
+    await BluetoothSingleton.instance.disconnect();
     bluetoothDataSubscription.cancel();
     receivingData = false;
     connectDisconnectButtonText = "Connect";
@@ -71,7 +70,7 @@ class DeviceDataProvider with ChangeNotifier {
       notifyListeners();
       print("getting data");
 
-      rx = await getRx(device);
+      rx = await BluetoothSingleton.instance.getRx();
 
       bluetoothDataSubscription = rx.value.listen(onDataReceived,
           onError: onErrorReceivingData, onDone: onDoneCalled);
@@ -201,7 +200,7 @@ class DeviceDataProvider with ChangeNotifier {
       await disconnectFromDevice();
     }else{
       print("Trying to connect");
-      await device.connect(timeout: Duration(seconds: 10), autoConnect: false);
+      BluetoothSingleton.instance.connect();
     }
   }
 
