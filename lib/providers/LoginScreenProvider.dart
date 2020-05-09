@@ -38,8 +38,18 @@ class LoginScreenProvider with ChangeNotifier {
           print("User confirmation required");
           Navigator.popAndPushNamed(context, CONFIRM_USER_SCREEN);
         }
-        else {
+        else if(response == INCORRECT_USER_NAME_OR_PASSWORD) {
+          loginError = true;
+          loginErrorMessage = response;
+          loading = false;
+          notifyListeners();
+        }else if(response == USER_LOGGED_IN){
           Navigator.pushNamedAndRemoveUntil(context, DEVICE_SCAN_SCREEN, (route) => false);
+        } else{
+          loginError = true;
+          loginErrorMessage = response;
+          loading = false;
+          notifyListeners();
         }
       }, onError: loginFailed);
     }
