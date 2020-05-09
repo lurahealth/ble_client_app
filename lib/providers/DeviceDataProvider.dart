@@ -212,4 +212,12 @@ class DeviceDataProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> powerOff() async {
+    print("Sending power off message");
+    BluetoothCharacteristic tx = await BluetoothSingleton.instance.getTx();
+
+    print("Sending message PWROFF");
+    await tx.write(utf8.encode("PWROFF"));
+  }
 }

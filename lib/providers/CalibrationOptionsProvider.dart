@@ -11,6 +11,7 @@ class CalibrationOptionsProvider with ChangeNotifier{
   String calibrationMessage;
   StreamSubscription<List<int>> bluetoothDataSubscription;
   bool listening = false;
+  bool loading = false;
 
   Future<void> startListening() async {
     if(!listening){
@@ -43,7 +44,8 @@ class CalibrationOptionsProvider with ChangeNotifier{
   Future<void> startCalibration() async {
     if (selectedCalibrationOption != null) {
       print("Start calibration");
-      print("device connected");
+      loading = true;
+      notifyListeners();
 
       BluetoothCharacteristic tx = await BluetoothSingleton.instance.getTx();
 
@@ -58,6 +60,9 @@ class CalibrationOptionsProvider with ChangeNotifier{
     print("Parsed data: $parsedData");
     if(parsedData == "CALBEGIN"){
 
+    }else{
+      loading = false;
+      notifyListeners();
     }
   }
 

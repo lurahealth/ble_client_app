@@ -1,6 +1,7 @@
 import 'package:ble_client_app/providers/CalibrationOptionsProvider.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
+import 'package:ble_client_app/widget/LoadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,42 +32,54 @@ class CalibrationOptionsWidget extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Expanded(
+          Visibility(
+            visible: !provider.loading,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: getCalibrationButton(ONE_POINT_CALIBRATION, context, provider),
+                Center(
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: getCalibrationButton(ONE_POINT_CALIBRATION, context, provider),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: getCalibrationButton(TWO_POINT_CALIBRATION, context, provider),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: getCalibrationButton(THREE_POINT_CALIBRATION, context, provider),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+                Spacer(),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: getCalibrationButton(TWO_POINT_CALIBRATION, context, provider),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: getCalibrationButton(THREE_POINT_CALIBRATION, context, provider),
-                ),
+                  padding: const EdgeInsets.all(64.0),
+                  child: RaisedButton(
+                      color: LIGHT_GREEN,
+                      onPressed: provider.startCalibration,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text("Start Calibration", style: WHITE_TEXT.copyWith(fontSize: 20),),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(64.0),
-            child: RaisedButton(
-                color: LIGHT_GREEN,
-                onPressed: provider.startCalibration,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text("Start Calibration", style: WHITE_TEXT.copyWith(fontSize: 20),),
-              ),
-            ),
-          )
+          Visibility(
+            visible: provider.loading ,
+            child: LoadingWidget("Waiting for calibration to start", LURA_BLUE))
         ],
       ),
     );
