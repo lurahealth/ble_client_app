@@ -49,7 +49,7 @@ class BottomNavigationWidget extends StatelessWidget {
       backgroundColor: LURA_BLUE,
       title: SizedBox(
           height: 30,
-          child: Image.asset("images/logo.png"),
+          child: Image.asset("images/title_logo.png"),
       ),
       centerTitle: true,
       actions: <Widget>[

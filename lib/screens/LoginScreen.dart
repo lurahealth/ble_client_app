@@ -1,6 +1,7 @@
 import 'package:ble_client_app/providers/LoginScreenProvider.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
+import 'package:ble_client_app/widget/LoadingWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -123,7 +124,18 @@ class LoginWidget extends StatelessWidget {
                 SizedBox(height: height*0.04 ,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  child: loginButton,
+                  child: Column(
+                    children: <Widget>[
+                      Visibility(
+                        visible: !provider.loading,
+                          child: loginButton
+                      ),
+                      Visibility(
+                        visible: provider.loading,
+                        child: LoadingWidget("Loggin you in!", LURA_BLUE)
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
