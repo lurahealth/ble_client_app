@@ -1,5 +1,4 @@
 import 'package:ble_client_app/singletons/BluetoothSingleton.dart';
-import 'package:ble_client_app/utils/BluetoothUtils.dart';
 import 'package:ble_client_app/singletons/SecureStorageUtils.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:flutter/cupertino.dart';

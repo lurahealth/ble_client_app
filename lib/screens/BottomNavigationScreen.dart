@@ -1,5 +1,6 @@
 import 'package:ble_client_app/providers/DeviceDataProvider.dart';
 import 'package:ble_client_app/singletons/BluetoothSingleton.dart';
+import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/DataTableScreen.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/GraphScreenWidget.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
@@ -56,7 +57,11 @@ class BottomNavigationWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onLongPress: null,
+            onLongPress: () async {
+              await provider.rx.setNotifyValue(false);
+              await provider.bluetoothDataSubscription.cancel();
+              Navigator.pushNamed(context, CALIBRATION_OPTIONS_SCREEN);
+            },
             child: Icon(
               Icons.bluetooth,
               color: (deviceState == BluetoothDeviceState.connected)
@@ -70,6 +75,7 @@ class BottomNavigationWidget extends StatelessWidget {
 
     final BottomNavigationBar bottomNavigationBar =  BottomNavigationBar(
       backgroundColor: LURA_BLUE,
+      elevation: 0,
       currentIndex: provider.currentScreen,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(

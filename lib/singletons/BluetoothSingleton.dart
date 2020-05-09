@@ -68,6 +68,13 @@ class BluetoothSingleton{
     return getRxCharacteristic(characteristics);
   }
 
+  Future<BluetoothCharacteristic> getTx() async {
+    List<BluetoothService> services = await _connectedDevice.discoverServices();
+    BluetoothService uartService = getUartService(services);
+    List<BluetoothCharacteristic> characteristics = uartService.characteristics;
+    return getTxCharacteristic(characteristics);
+  }
+
   BluetoothService getUartService(List<BluetoothService> services) {
     return services
         .firstWhere((services) => services.uuid.toString() == UART_SERVICE_UUID);
@@ -77,6 +84,13 @@ class BluetoothSingleton{
       List<BluetoothCharacteristic> characteristics) {
     return characteristics.firstWhere((c) => c.uuid.toString() == RX_UUID);
   }
+
+  BluetoothCharacteristic getTxCharacteristic(
+      List<BluetoothCharacteristic> characteristics) {
+    return characteristics.firstWhere((c) => c.uuid.toString() == TX_UUID);
+  }
+
+
 
 
 }

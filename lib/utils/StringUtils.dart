@@ -47,6 +47,10 @@ final TextStyle style = TextStyle(fontSize: 15);
 // Secure Storage Keys
 String SAVED_BLE_DEVICE_NAME = "ble_device_name";
 
+// Calibration Options
+const String ONE_POINT_CALIBRATION = "One point calibration";
+const String TWO_POINT_CALIBRATION = "Two point calibration";
+const String THREE_POINT_CALIBRATION = "Three point calibration";
 //Routes
 const BOTTOM_NAVIGATION_SCREEN = "/bottonNavigatinoScreen";
 const DEVICE_SCAN_SCREEN = "/deviceScanScreen";
@@ -54,6 +58,8 @@ const FULL_SCREEN_GRAPH = "/fullScreenGraph";
 const LOGIN_SCREEN = "/loginScreen";
 const CONFIRM_USER_SCREEN = "/userConfirmScreen";
 const NEW_USER_SCREEN = "/newUserScreen";
+const CALIBRATION_OPTIONS_SCREEN = "/calibrationOptions";
+const CALIBRATION_SCREEN = "/calibrationScreen";
 
 //TAGs
 const String PH_GRAPH = "ph_graphs";
@@ -66,6 +72,7 @@ const String PASSWORD_CHANGE_SUCCESS = "password_reset_success";
 const String PASSWORD_CHANGE_FAILED = "password_reset_failed";
 const String PASSWORD_RESET_FAILED = "passowrd_rest_dailed";
 const String USER_NOT_CONFIRMED = "User is not confirmed.";
+const String INCORRECT_USER_NAME_OR_PASSWORD = "Incorrect username or password";
 const String NEW_USER_CREATED = "New user created";
 
 // Password regex

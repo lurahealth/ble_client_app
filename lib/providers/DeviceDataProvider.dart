@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:auto_orientation/auto_orientation.dart';
 import 'package:ble_client_app/models/DataModel.dart';
 import 'package:ble_client_app/models/AreaChartData.dart';
 import 'package:ble_client_app/singletons/BluetoothSingleton.dart';
-import 'package:ble_client_app/utils/BluetoothUtils.dart';
 import 'package:ble_client_app/singletons/CognitoUserSingleton.dart';
 import 'package:ble_client_app/singletons/DatabaseProvider.dart';
 import 'package:ble_client_app/utils/RestEndpoints.dart';
@@ -42,13 +40,6 @@ class DeviceDataProvider with ChangeNotifier {
 
   static const int PAST_DATA_SMALL_GRAPH = 16; // 4 readings per hours, 4 hours of data
 
-
-//  Stream<BluetoothDeviceState> streamDeviceState() {
-////    deviceName = device.name;
-////    device.connect(timeout: Duration(seconds: 200), autoConnect: false);
-//    return BluetoothSingleton.instance.connectedDevice
-//  }
-
   Future<void> disconnectFromDevice() async {
     rx.setNotifyValue(false);
     await BluetoothSingleton.instance.disconnect();
@@ -82,7 +73,6 @@ class DeviceDataProvider with ChangeNotifier {
   Future<void> setCurrentUser() async {
     currentUser = await CognitoUserSingleton.instance.getCurrentUserEmail();
   }
-
 
 
   Future<void> getPastDataFromDB() async{

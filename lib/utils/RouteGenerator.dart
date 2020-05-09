@@ -1,4 +1,5 @@
 import 'package:ble_client_app/screens/BottomNavigationScreen.dart';
+import 'package:ble_client_app/screens/CalibrationOptionsScreen.dart';
 import 'package:ble_client_app/screens/ConfirmUserScreen.dart';
 import 'package:ble_client_app/screens/CreateNewUserScreen.dart';
 import 'package:ble_client_app/screens/DeviceScanScreen.dart';
@@ -21,6 +22,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ConfirmUserScreen(args));
       case NEW_USER_SCREEN:
         return MaterialPageRoute(builder: (_) => CreateNewUserScreen());
+      case CALIBRATION_OPTIONS_SCREEN:
+        return MaterialPageRoute(builder: (_) => CalibrationOptionsScreen());
       default:
         return _errorRoute();
     }
