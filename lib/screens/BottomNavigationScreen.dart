@@ -1,6 +1,6 @@
 import 'package:ble_client_app/providers/DeviceDataProvider.dart';
 import 'package:ble_client_app/widget/bottom_navbar_screens/DataTableScreen.dart';
-import 'package:ble_client_app/widget/bottom_navbar_screens/MainUIWidget.dart';
+import 'package:ble_client_app/widget/bottom_navbar_screens/GraphScreenWidget.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class BottomNavigationWidget extends StatelessWidget {
     }
 
     final List<Widget> _widgetOptions = <Widget>[
-      MainUIWidget(provider),
+      GraphScreenWidget(provider),
       DataTableScreen(provider)
     ];
 

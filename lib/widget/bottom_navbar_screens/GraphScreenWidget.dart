@@ -6,10 +6,10 @@ import 'package:ble_client_app/widget/main_ui_screen_widgets/MainUIScreenDailySt
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainUIWidget extends StatelessWidget {
+class GraphScreenWidget extends StatelessWidget {
   final DeviceDataProvider provider;
 
-  MainUIWidget(this.provider);
+  GraphScreenWidget(this.provider);
 
   @override
   Widget build(BuildContext context) {
