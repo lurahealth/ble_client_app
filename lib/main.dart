@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
             primaryColor: LURA_BLUE,
             accentColor: LURA_ORANGE
         ),
-        initialRoute: DEVICE_SCAN_SCREEN,
+        initialRoute: LOGIN_SCREEN,
         onGenerateRoute: RouteGenerator.generateRoute
     );
   }

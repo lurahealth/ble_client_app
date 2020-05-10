@@ -1,4 +1,4 @@
-import 'package:ble_client_app/singletons/BluetoothUtils.dart';
+import 'package:ble_client_app/singletons/BluetoothSingleton.dart';
 import 'package:ble_client_app/singletons/SecureStorageUtils.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,13 +11,20 @@ class DeviceScanProvider with ChangeNotifier {
   bool scanningComplete = false; // used to check if we should show or hide
                                 // the circular progress bar
 
+  bool bluetoothOn = false;
+
+  Stream<bool> checkBluetooth() {
+    FlutterBlue flutterBlue = FlutterBlue.instance;
+    return  flutterBlue.isOn.asStream();
+  }
+
   Future<String> scanForDevices() async {
     if (!scanning) {
       scanning = true;
       scanResults = [];
       scanningComplete = false;
-      BluetoothProvider.provider
-          .bluetoothScan(onScanResult, onScanningComplete, onErrorScanning);
+      BluetoothSingleton.instance
+                        .bluetoothScan(onScanResult, onScanningComplete, onErrorScanning);
     }
     return "Return";
   }
@@ -45,8 +52,10 @@ class DeviceScanProvider with ChangeNotifier {
   }
 
   void connectToDevice(BuildContext context, BluetoothDevice device) {
-    BluetoothProvider.provider.stopScan();
-    saveBLEDeviceName(device.name);
-    Navigator.pushReplacementNamed(context, BOTTOM_NAVIGATION_SCREEN, arguments: device);
+    //BluetoothProvider.provider.stopScan();
+    BluetoothSingleton.instance.stopScan();
+//    saveBLEDeviceName(device.name);
+    BluetoothSingleton.instance.connectedDevice = device;
+    Navigator.pushReplacementNamed(context, BOTTOM_NAVIGATION_SCREEN);
   }
 }

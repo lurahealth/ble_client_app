@@ -13,6 +13,6 @@ class RestEndpoints{
   }
 
   static List<Map<String, dynamic>> creatingTestingList(DataModel dataModel){
-    return [dataModel.toMap()];
+    return [dataModel.formatForUpload()];
   }
 }
