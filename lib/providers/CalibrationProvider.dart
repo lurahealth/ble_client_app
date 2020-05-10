@@ -9,6 +9,7 @@ import 'package:flutter_blue/flutter_blue.dart';
 class CalibrationProvider with ChangeNotifier{
 
   CalibrationProvider(String calibration){
+    print(calibration);
     switch (calibration) {
       case ONE_POINT_CALIBRATION:
         numberOfCalibrationPoints = 1;
@@ -24,12 +25,14 @@ class CalibrationProvider with ChangeNotifier{
 
 
   int numberOfCalibrationPoints = 0;
-  List<String> calibrationValues = [];
-  String currentCalibrationValue;
+  int currentCalibrationPoint = 1;
+  double currentCalibrationValue;
   bool listening = false;
   bool loading = false;
   String loadingMessage;
   StreamSubscription<List<int>> bluetoothDataSubscription;
+  List<double> calibrationValues = [];
+  bool allCalibrationComplete = false;
 
   Future<void> startListening() async {
     if(!listening){
@@ -46,8 +49,14 @@ class CalibrationProvider with ChangeNotifier{
     print("Raw data received ${value.toString()}");
     String parsedData = utf8.decode(value);
     print("Parsed data: $parsedData");
-    if(parsedData == "CALBEGIN"){
-
+    if(parsedData.contains("CONF")){
+      calibrationValues.add(currentCalibrationValue);
+      currentCalibrationPoint = currentCalibrationPoint + 1;
+      if(currentCalibrationPoint > numberOfCalibrationPoints){
+        print("Calibration complete");
+        allCalibrationComplete = true;
+      }
+      notifyListeners();
     }else{
       loading = false;
       notifyListeners();
@@ -60,12 +69,20 @@ class CalibrationProvider with ChangeNotifier{
     bluetoothDataSubscription.cancel();
   }
 
-  void calibrationValueEntered(String value, int currentCalibrationIndex) {
-    calibrationValues.insert(currentCalibrationIndex, value);
-    currentCalibrationValue = value;
+  void calibrationValueEntered(String value) {
+    if(value != null && value.length > 0){
+      currentCalibrationValue = double.parse(value);
+    }else{
+      currentCalibrationValue = null;
+    }
   }
 
-  void calibrationButtonPressed(int currentCalibrationIndex) {
-    print(calibrationValues[currentCalibrationIndex]);
+  Future<void> calibrationButtonPressed() async {
+    if(currentCalibrationValue != null) {
+      BluetoothCharacteristic tx = await BluetoothSingleton.instance.getTx();
+      String calibrationMessage = "PT${currentCalibrationPoint}_$currentCalibrationValue";
+      print("Sending message $calibrationMessage");
+      await tx.write(utf8.encode(calibrationMessage));
+    }
   }
 }

@@ -62,7 +62,7 @@ class CalibrationOptionsProvider with ChangeNotifier{
     print("Parsed data: $parsedData");
     if(parsedData.contains("CALBEGIN")){
       bluetoothDataSubscription.cancel();
-      Navigator.pushNamedAndRemoveUntil(context, CALIBRATION_SCREEN, (route) => false);
+      Navigator.pushNamed(context, CALIBRATION_SCREEN, arguments: selectedCalibrationOption);
     }else{
       loading = false;
       notifyListeners();
