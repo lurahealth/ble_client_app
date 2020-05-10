@@ -32,54 +32,47 @@ class CalibrationOptionsWidget extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Visibility(
             visible: !provider.loading,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Center(
-                  child: Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: getCalibrationButton(ONE_POINT_CALIBRATION, context, provider),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: getCalibrationButton(TWO_POINT_CALIBRATION, context, provider),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: getCalibrationButton(THREE_POINT_CALIBRATION, context, provider),
-                        ),
-                      ],
-                    ),
+            child: Expanded(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: getCalibrationButton(ONE_POINT_CALIBRATION, context, provider),
                   ),
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(64.0),
-                  child: RaisedButton(
-                      color: LIGHT_GREEN,
-                      onPressed: provider.startCalibration,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text("Start Calibration", style: WHITE_TEXT.copyWith(fontSize: 20),),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: getCalibrationButton(TWO_POINT_CALIBRATION, context, provider),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: getCalibrationButton(THREE_POINT_CALIBRATION, context, provider),
+                  ),
+                ],
+              ),
             ),
           ),
           Visibility(
-            visible: provider.loading ,
-            child: LoadingWidget("Waiting for calibration to start", LURA_BLUE))
+            visible: !provider.loading,
+            child: Padding(
+              padding: const EdgeInsets.all(64.0),
+              child: RaisedButton(
+                  color: LIGHT_GREEN,
+                  onPressed: provider.startCalibration,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text("Start Calibration", style: WHITE_TEXT.copyWith(fontSize: 20),),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: provider.loading,
+              child: LoadingWidget("Begining calibration", LURA_BLUE)
+          )
         ],
       ),
     );
