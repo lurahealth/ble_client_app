@@ -46,7 +46,7 @@ class MainUIScreenButtonRow extends StatelessWidget {
           color: LURA_BLUE,
           onPressed: provider.powerOff,
           onLongPress: () => Navigator.pushNamed(context, DEVICE_SCAN_SCREEN) ,
-          child: Text("POwer off", style: WHITE_TEXT,),
+          child: Text("Power off", style: WHITE_TEXT,),
         ),
       ],
     );
