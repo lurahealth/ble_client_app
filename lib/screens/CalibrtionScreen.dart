@@ -35,7 +35,7 @@ class CalibrationWidget extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          ListView(children: calibrationPoints,),
+          Expanded(child: ListView(children: calibrationPoints,)),
 
         ],
       ),

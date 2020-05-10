@@ -57,7 +57,7 @@ class BottomNavigationWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onLongPress: () async {
+            onDoubleTap: () async {
               await provider.rx.setNotifyValue(false);
               await provider.bluetoothDataSubscription.cancel();
               Navigator.pushNamed(context, CALIBRATION_OPTIONS_SCREEN);

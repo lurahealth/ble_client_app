@@ -61,7 +61,7 @@ class CalibrationOptionsWidget extends StatelessWidget {
               padding: const EdgeInsets.all(64.0),
               child: RaisedButton(
                   color: LIGHT_GREEN,
-                  onPressed: provider.startCalibration,
+                  onPressed:() => provider.startCalibration(context),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text("Start Calibration", style: WHITE_TEXT.copyWith(fontSize: 20),),

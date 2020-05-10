@@ -12,6 +12,7 @@ class CalibrationOptionsProvider with ChangeNotifier{
   StreamSubscription<List<int>> bluetoothDataSubscription;
   bool listening = false;
   bool loading = false;
+  BuildContext context;
 
   Future<void> startListening() async {
     if(!listening){
@@ -41,8 +42,9 @@ class CalibrationOptionsProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> startCalibration() async {
+  Future<void> startCalibration(BuildContext context) async {
     if (selectedCalibrationOption != null) {
+      this.context = context;
       print("Start calibration");
       loading = true;
       notifyListeners();
@@ -58,8 +60,9 @@ class CalibrationOptionsProvider with ChangeNotifier{
     print("Raw data received ${value.toString()}");
     String parsedData = utf8.decode(value);
     print("Parsed data: $parsedData");
-    if(parsedData == "CALBEGIN"){
-
+    if(parsedData.contains("CALBEGIN")){
+      bluetoothDataSubscription.cancel();
+      Navigator.pushNamedAndRemoveUntil(context, CALIBRATION_SCREEN, (route) => false);
     }else{
       loading = false;
       notifyListeners();
