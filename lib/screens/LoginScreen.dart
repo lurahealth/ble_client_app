@@ -95,9 +95,8 @@ class LoginWidget extends StatelessWidget {
     );
 
     final newAccountButton = FlatButton(
-      color: LURA_BLUE,
       onPressed: () => Navigator.pushNamed(context, NEW_USER_SCREEN),
-      child: new Text(NEW_USER_BUTTON_TEXT),
+      child: new Text(NEW_USER_BUTTON_TEXT, style: LURA_BLUE_TEXT,),
     );
     
     return Scaffold(
