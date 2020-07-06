@@ -33,6 +33,7 @@ class DataTableScreen extends StatelessWidget {
                       getText(
                           dataTableTimeFormat.format(dataModel.timeStamp.toLocal())),
                       getText(dataModel.pH.toString()),
+                      getText(dataModel.pHMilliVolts.toString()),
                       getText(dataModel.temperature.toString()),
                       getText(dataModel.battery.toString())
                     ],

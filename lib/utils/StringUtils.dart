@@ -12,6 +12,7 @@ final String BATTERY = "battery"; // battery voltage reading
 final String TEMPERATURE = "temperature"; // temperature reading
 final String CONNETION_TIME =
     "connection_time"; // time to connect to the sensor
+final String PH_MILLI_VOLT = "ph_milli_volt";
 final String TIME_STAMP = "time_stamp"; // time stamp of the reading in UTC
 final String NOTES = "notes"; // Note for a sensor reading
 final String USER_NAME = "user_name"; // User uploading the data
@@ -23,12 +24,12 @@ final String CREATE_TABLE_QUERY = "CREATE TABLE $TABLE_NAME ("
     "$USER_NAME TEXT,"
     "$UPLOADED REAL,"
     "$PH REAL,"
+    "$PH_MILLI_VOLT REAL"
     "$BATTERY REAL,"
     "$TEMPERATURE REAL,"
     "$CONNETION_TIME INTEGER,"
     "$NOTES TEXT,"
     "$TIME_STAMP INTEGER)";
-
 
 
 // UUID

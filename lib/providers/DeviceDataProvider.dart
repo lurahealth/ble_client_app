@@ -143,8 +143,11 @@ class DeviceDataProvider with ChangeNotifier {
 
   void displayData(DataModel dataModel, DateTime nowLocal) {
     allData.insert(0, dataModel);
-    pHData.add(AreaChartData.fromLiveData(nowLocal, dataModel.pH));
-    calculateMinMaxAndAveragePH(dataModel.pH);
+    double currentPh = dataModel.pH;
+    if(currentPh > 0) {
+      pHData.add(AreaChartData.fromLiveData(nowLocal, dataModel.pH));
+      calculateMinMaxAndAveragePH(dataModel.pH);
+    }
   }
 
   calculateMinMaxAndAveragePH(double currentPh){

@@ -6,6 +6,7 @@ class DataModel{
   final num battery;
   final num temperature;
   final num connectionTime;
+  final num pHMilliVolts;
   final DateTime timeStamp;
   final String notes;
   final String userName;
@@ -15,6 +16,7 @@ class DataModel{
             this.battery,
             this.temperature,
             this.connectionTime,
+            this.pHMilliVolts,
             this.timeStamp,
             this.notes,
             this.userName,
@@ -26,6 +28,7 @@ class DataModel{
       BATTERY: battery,
       TEMPERATURE: temperature,
       CONNETION_TIME: connectionTime,
+      PH_MILLI_VOLT: pHMilliVolts,
       TIME_STAMP: timeStamp.millisecondsSinceEpoch,
       NOTES: notes,
       USER_NAME: userName,
@@ -39,6 +42,7 @@ class DataModel{
       BATTERY: battery,
       TEMPERATURE: temperature,
       CONNETION_TIME: connectionTime,
+      PH_MILLI_VOLT: pHMilliVolts,
       TIME_STAMP: (timeStamp.millisecondsSinceEpoch/1000).round(),
       NOTES: notes,
       USER_NAME: userName,
@@ -57,6 +61,7 @@ class DataModel{
       map[BATTERY],
       map[TEMPERATURE],
       map[CONNETION_TIME],
+      map[PH_MILLI_VOLT],
       DateTime.fromMillisecondsSinceEpoch(map[TIME_STAMP]),
       map[NOTES],
       map[USER_NAME],
@@ -68,14 +73,15 @@ class DataModel{
                                       String currentUser, DateTime nowUTC){
     List<String> readings = data.split(",");
     return DataModel(
-        double.parse(readings[0]),
-        double.parse(readings[2]),
-        double.parse(readings[1]),
-        (readings.length > 3)? double.parse(readings[3]):null,
-        nowUTC,
+        double.parse(readings[0]), //ph
+        double.parse(readings[2]), // battery
+        double.parse(readings[1]), // temp
+        (readings.length > 4)? double.parse(readings[4]):null, // if length of reading > than 4 parse connection time.
+        double.parse(readings[3]), //ph milli volt
+        nowUTC, // time in mills
         notes,
         currentUser,
-        true
+        true // uploaded
     );
   }
 }
