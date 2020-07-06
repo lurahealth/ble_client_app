@@ -126,7 +126,7 @@ class CalibrationWidget extends StatelessWidget {
                         width: width * 0.1 ,
                         child: TextField(
                           textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                             onChanged: provider.calibrationValueEntered,
                           ),
                       )

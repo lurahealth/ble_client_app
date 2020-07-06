@@ -71,7 +71,7 @@ class CalibrationOptionsWidget extends StatelessWidget {
           ),
           Visibility(
               visible: provider.loading,
-              child: LoadingWidget("Begining calibration", LURA_BLUE)
+              child: LoadingWidget("Beginning calibration", LURA_BLUE)
           )
         ],
       ),

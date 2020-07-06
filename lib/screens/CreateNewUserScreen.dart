@@ -102,30 +102,37 @@ class CreateNewUserWidget extends StatelessWidget {
                     patientEmailTextField,
                     patientPasswordTextField,
                     confirmPasswordTextField,
-
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8, top: 48, bottom: 16),
+                      child: createUserButton,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: cancelButton,
+                    )
                   ],
                 ),
               ),
             ),
-            Visibility(
-              visible: !provider.loading,
-              child: Column(
-                children: <Widget>[
-                  Visibility(
-                    visible: provider.error,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(provider.errorMessage, style: ERROR_TEXT,),
-                    ),
-                  ),
-                  createUserButton,
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: cancelButton,
-                  ),
-                ],
-              ),
-            ),
+//            Visibility(
+//              visible: !provider.loading,
+//              child: Column(
+//                children: <Widget>[
+//                  Visibility(
+//                    visible: provider.error,
+//                    child: Padding(
+//                      padding: const EdgeInsets.all(8.0),
+//                      child: Text(provider.errorMessage, style: ERROR_TEXT,),
+//                    ),
+//                  ),
+//                  createUserButton,
+//                  Padding(
+//                    padding: const EdgeInsets.all(8.0),
+//                    child: cancelButton,
+//                  ),
+//                ],
+//              ),
+//            ),
             Visibility(
                 visible: provider.loading,
                 child: LoadingWidget("Registering user", LURA_BLUE)
