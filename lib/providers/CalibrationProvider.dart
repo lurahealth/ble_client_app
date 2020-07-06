@@ -72,6 +72,9 @@ class CalibrationProvider with ChangeNotifier{
   void calibrationValueEntered(String value) {
     if(value != null && value.length > 0){
       currentCalibrationValue = double.parse(value);
+      // Ensure number always has exactly 1 decimal place
+      currentCalibrationValue = double.parse(currentCalibrationValue.toStringAsFixed(1));
+      print("current cal value: $currentCalibrationValue");
     }else{
       currentCalibrationValue = null;
     }

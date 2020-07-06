@@ -8,10 +8,12 @@ class GraphDataUtils {
       List<AreaChartData> splineData, Color color, double animationDuration) {
     return SplineSeries<AreaChartData, DateTime>(
         dataSource: splineData,
+        splineType: SplineType.monotonic,
         color: color,
         xValueMapper: (AreaChartData data, _) => data.timeStamp,
         yValueMapper: (AreaChartData data, _) => data.dataReading,
         animationDuration: animationDuration,
-        width: 5);
+        width: 3
+    );
   }
 }

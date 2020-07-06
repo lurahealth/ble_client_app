@@ -19,7 +19,7 @@ class DeviceDataProvider with ChangeNotifier {
   static DateTime currentTime = DateTime.now();
   DateTime min = currentTime;
   DateTime max = currentTime.add(Duration(seconds: 20));
-  double animationDuration = 0;
+  double animationDuration = 200;
   int currentScreen = 0;
   bool fullScreenGraph = false;
   Icon graphIcon = Icon(Icons.fullscreen);
@@ -34,7 +34,7 @@ class DeviceDataProvider with ChangeNotifier {
   BluetoothCharacteristic rx;
 
   double currentPh = 0;
-  double minPh = -500;
+  double minPh = 0;
   double maxPh = 0;
   double averagePh = 0;
 
@@ -93,7 +93,7 @@ class DeviceDataProvider with ChangeNotifier {
         lastMidnight.millisecondsSinceEpoch, nowLocal.millisecondsSinceEpoch, currentUser);
     Map<String, dynamic> statsMap = queryResult[0];
     averagePh = statsMap["average"] ?? 0;
-    minPh = statsMap["min"] ?? -500;
+    minPh = statsMap["min"] ?? 0;
     maxPh = statsMap["max"] ?? 0;
     print("Average ph: $averagePh min pH: $minPh max ph: $maxPh");
   }

@@ -29,7 +29,7 @@ dependencies:
   permission_handler: 4.1.0
   sqflite: 1.2.0
   path_provider: 1.5.1
-  path: 1.6.4
+  path: 1.7.0 # was 1.6.4
   syncfusion_flutter_charts: 18.1.46
   intl: 0.16.0
   dio: 3.0.8
