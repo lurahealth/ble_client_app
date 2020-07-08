@@ -23,6 +23,10 @@ class LoginWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
+    if(!provider.loginDetailsChecked) {
+      provider.checkLoginDetails(context);
+    }
+
     final titleBlock = Container(
         height: height * 0.25,
         decoration: BoxDecoration(

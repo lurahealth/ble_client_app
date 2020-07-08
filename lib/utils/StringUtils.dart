@@ -46,7 +46,10 @@ final DateFormat csvDateTimeFormat = DateFormat("dd.MMMM.yyyy HH:mm");
 final TextStyle style = TextStyle(fontSize: 15);
 
 // Secure Storage Keys
-String SAVED_BLE_DEVICE_NAME = "ble_device_name";
+const String SAVED_BLE_DEVICE_NAME = "ble_device_name";
+const String SAVED_USER_EMAIL = "saved_user_name";
+const String SAVED_PASSWORD = "saved_password";
+
 
 // Calibration Options
 const String ONE_POINT_CALIBRATION = "One point calibration";
