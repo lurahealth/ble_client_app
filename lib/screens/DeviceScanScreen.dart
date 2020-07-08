@@ -27,7 +27,7 @@ class DeviceScanWidget extends StatelessWidget {
     final provider = Provider.of<DeviceScanProvider>(context);
     final isBluetoothEnabled = Provider.of<bool>(context);
     if(isBluetoothEnabled){
-      provider.scanForDevices();
+      provider.scanForDevices(context);
     }
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +39,7 @@ class DeviceScanWidget extends StatelessWidget {
             onTap: (){
               deleteFromSecureStorage(SAVED_USER_EMAIL);
               deleteFromSecureStorage(SAVED_PASSWORD);
+              deleteFromSecureStorage(SAVED_BLE_DEVICE_NAME);
               Navigator.pushNamedAndRemoveUntil(context, LOGIN_SCREEN, (route) => false);
             },
             child: Row(
@@ -53,7 +54,7 @@ class DeviceScanWidget extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () async{
           provider.scanning = false; // set to false so we can scan again
-          provider.scanForDevices();
+          provider.scanForDevices(context);
         },
         child: Center(
           child: Stack(

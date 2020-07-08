@@ -12,15 +12,19 @@ class DeviceScanProvider with ChangeNotifier {
                                 // the circular progress bar
 
   bool bluetoothOn = false;
+  String savedDeviceName;
+  BuildContext context;
 
   Stream<bool> checkBluetooth() {
     FlutterBlue flutterBlue = FlutterBlue.instance;
     return  flutterBlue.isOn.asStream();
   }
 
-  Future<String> scanForDevices() async {
+  Future<String> scanForDevices(BuildContext context) async {
     if (!scanning) {
+      this.context = context;
       scanning = true;
+      savedDeviceName = await readFromSecureStorage(SAVED_BLE_DEVICE_NAME);
       scanResults = [];
       scanningComplete = false;
       BluetoothSingleton.instance
@@ -32,9 +36,11 @@ class DeviceScanProvider with ChangeNotifier {
   void onScanResult(List<ScanResult> scanResults) {
     scanResults.forEach((result) {
       String name = result.device.name;
-      if (name != null &&
-          name.length > 0 &&
-          !(this.scanResults.contains(result))) {
+      if (name != null &&name.length > 0 &&
+         !(this.scanResults.contains(result))) {
+        if(savedDeviceName != null && savedDeviceName == result.device.name){
+          connectToDevice(context, result.device);
+        }
         this.scanResults.add(result);
       }
     });
@@ -56,6 +62,7 @@ class DeviceScanProvider with ChangeNotifier {
     BluetoothSingleton.instance.stopScan();
 //    saveBLEDeviceName(device.name);
     BluetoothSingleton.instance.connectedDevice = device;
+    writeToSecureStorage(SAVED_BLE_DEVICE_NAME, device.name);
     Navigator.pushReplacementNamed(context, BOTTOM_NAVIGATION_SCREEN);
   }
 }
