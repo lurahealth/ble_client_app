@@ -1,4 +1,6 @@
 import 'package:ble_client_app/providers/DevicesScanProvider.dart';
+import 'package:ble_client_app/singletons/SecureStorageUtils.dart';
+import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:ble_client_app/widget/LoadingWidget.dart';
 import 'package:ble_client_app/widget/device_scan_list_item.dart';
@@ -16,12 +18,6 @@ class DeviceScanScreen extends StatelessWidget {
       StreamProvider(create:(_) => provider.checkBluetooth(), initialData: false,)
     ],
     child: DeviceScanWidget(),);
-
-
-//    return ChangeNotifierProvider<DeviceScanProvider>(
-//      create: (_) => DeviceScanProvider(),
-//      child: DeviceScanWidget(),
-//    );
   }
 }
 
@@ -37,6 +33,22 @@ class DeviceScanWidget extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: LURA_BLUE,
         title: new Text("Device scan"),
+        centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: (){
+              deleteFromSecureStorage(SAVED_USER_EMAIL);
+              deleteFromSecureStorage(SAVED_PASSWORD);
+              Navigator.pushNamedAndRemoveUntil(context, LOGIN_SCREEN, (route) => false);
+            },
+            child: Row(
+              children: [
+                Icon(Icons.exit_to_app),
+                Text("Sign out")
+              ],
+            ),
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async{
