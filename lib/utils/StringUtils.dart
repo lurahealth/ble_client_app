@@ -108,7 +108,7 @@ const String LOGIN_SCREEN_PASSWORD_LABEL = "Password";
 const String LOGIN_SCREEN_PASSWORD_ERROR =
     "Please enter your password to login!";
 const String LOGIN_BUTTON_TEST = "Log in now";
-const String LOGIN_LOADING_MESSAGE = "Loggin you in!";
+const String LOGIN_LOADING_MESSAGE = "Logging in";
 const String NEW_USER_BUTTON_TEXT = "Create new account";
 
 // Reset Password Screen
@@ -120,10 +120,10 @@ const String PASSWORD_RESET_SCREEN_NEW_PASSWORD_HINT =
     "Please enter a new password!";
 const String PASSWORD_RESET_SCREEN_NEW_PASSWORD_ERROR =
     "Password need to container atleast \n "
-    "1 upper case charecter \n "
-    "1 lower case charecter \n "
+    "1 upper case character \n "
+    "1 lower case character \n "
     "1 number \n "
-    "1 special charecter (@\$!%*-?&^~)";
+    "1 special character (@\$!%*-?&^~)";
 const String PASSWORD_RESET_SCREEN_CONFIRM_PASSWORD_HINT =
     "Re-Enter your password";
 const String PASSWORD_RESET_SCREEN_CONFIRM_PASSWORD_LABEL = "Confirm Password";
@@ -131,4 +131,4 @@ const String PASSWORD_RESET_SCREEN_CONFIRM_PASSWORD_ERROR =
     "Passwords do not match!";
 const String PASSWORD_RESET_PASSWORD_BUTTON = "Reset Password";
 const String PASSWORD_RESET_SCREEN_LOADING_MESSAGE =
-    "Setting new password and loggin in!";
+    "Setting new password and logging in";

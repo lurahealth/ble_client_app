@@ -156,7 +156,7 @@ class DeviceDataProvider with ChangeNotifier {
       maxPh = currentPh;
     }
 
-    if(currentPh < minPh || minPh == -500){
+    if(currentPh < minPh || minPh == 0){
       minPh = currentPh;
     }
     averagePh = calculateNewAverage();

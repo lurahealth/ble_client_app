@@ -161,7 +161,7 @@ class LoginWidget extends StatelessWidget {
                       ),
                       Visibility(
                         visible: provider.loading,
-                        child: LoadingWidget("Logging you in!", LURA_BLUE)
+                        child: LoadingWidget("Logging in", LURA_BLUE)
                       )
                     ],
                   ),

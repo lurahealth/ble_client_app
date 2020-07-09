@@ -24,7 +24,7 @@ class DataTableScreen extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               DataModel dataModel = provider.allData[index];
               return Container(
-                color: index.isEven ? Colors.grey[350] : Colors.white,
+                color: index.isEven ? Color(0x120048a1) : Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(

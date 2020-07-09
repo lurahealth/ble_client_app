@@ -57,7 +57,7 @@ class CalibrationWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
-                color: Colors.greenAccent,
+                color: LIGHT_GREEN,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -138,10 +138,10 @@ class CalibrationWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
-                color: calibrationComplete ? Colors.grey : Colors.greenAccent,
+                color: calibrationComplete ? Colors.grey : LURA_ORANGE,
                   child: !calibrationComplete
-                   ? Text("Record ${text.toLowerCase()} data point")
-                   : Text("Calibration complete"),
+                   ? Text("Record ${text.toLowerCase()} data point", style: WHITE_TEXT)
+                   : Text("Calibration complete", style: WHITE_TEXT),
                   onPressed: !calibrationComplete ?  provider.calibrationButtonPressed : null,
               ),
             )
