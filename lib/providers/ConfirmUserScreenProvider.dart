@@ -36,7 +36,7 @@ class ConfirmUserScreenProvider with ChangeNotifier{
                           .then((result)
       {
         if(result){
-          loadingMessage = "Loggin you in!";
+          loadingMessage = "Logging in";
           notifyListeners();
 //          loading = false;
           CognitoUserSingleton.instance

@@ -7,7 +7,8 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseProvider {
 
-  static const int CURRENT_DB_VERSION = 2;
+  static const int CURRENT_DB_VERSION = 3;
+  // added ph_milli-volt column in version 3
 
   static Database _database;
   static final DatabaseProvider db = DatabaseProvider._();

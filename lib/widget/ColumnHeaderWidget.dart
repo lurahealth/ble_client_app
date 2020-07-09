@@ -1,3 +1,4 @@
+import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:flutter/material.dart';
 
 class ColumnHeaderWidget extends StatelessWidget {
@@ -6,10 +7,11 @@ class ColumnHeaderWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Text("Time",style: TextStyle(fontSize: 20),),
-        new Text("pH", style: TextStyle(color: Colors.orange,fontSize: 20),),
-        new Text("Temp", style: TextStyle(color: Colors.blue,fontSize: 20),),
-        new Text("Batt", style: TextStyle(color: Colors.red,fontSize: 20),),
+        Text("Time ",style: TextStyle(color: LURA_BLUE, fontSize: 18),),
+        new Text("pH", style: TextStyle(color: LURA_ORANGE, fontSize: 18),),
+        new Text("pHmV", style: TextStyle(color: LURA_ORANGE, fontSize: 18),),
+        new Text("Temp", style: TextStyle(color: LURA_ORANGE,fontSize: 18),),
+        new Text("Batt", style: TextStyle(color: LURA_ORANGE,fontSize: 18),),
       ],
     );
   }

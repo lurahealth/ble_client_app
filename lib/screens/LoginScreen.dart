@@ -23,6 +23,10 @@ class LoginWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
+    if(!provider.loginDetailsChecked) {
+      provider.checkLoginDetails(context);
+    }
+
     final titleBlock = Container(
         height: height * 0.25,
         decoration: BoxDecoration(
@@ -94,10 +98,35 @@ class LoginWidget extends StatelessWidget {
       ),
     );
 
-    final newAccountButton = FlatButton(
-      onPressed: () => Navigator.pushNamed(context, NEW_USER_SCREEN),
-      child: new Text(NEW_USER_BUTTON_TEXT, style: LURA_BLUE_TEXT,),
+    final newAccountButton = Material(
+      borderRadius: BorderRadius.circular(8.0),
+      elevation: 5.0,
+      color: Colors.white,
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () => Navigator.pushNamed(context, NEW_USER_SCREEN),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+//            Icon(
+//              Icons.play_arrow,
+//              color: Colors.white,
+//            ),
+            SizedBox(width: 10,),
+            Text(
+              NEW_USER_BUTTON_TEXT,
+              textAlign: TextAlign.center,
+              style: LURA_BLUE_TEXT,
+            ),
+          ],
+        ),
+      ),
     );
+
+//    final newAccountButton = FlatButton(
+//      onPressed: () => Navigator.pushNamed(context, NEW_USER_SCREEN),
+//      child: new Text(NEW_USER_BUTTON_TEXT, style: LURA_BLUE_TEXT,),
+//    );
     
     return Scaffold(
       appBar: AppBar(
@@ -114,7 +143,7 @@ class LoginWidget extends StatelessWidget {
                 titleBlock,
                 SizedBox(height: height*0.08 ,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                   child: emailTextField,
                 ),
                 Padding(
@@ -123,7 +152,7 @@ class LoginWidget extends StatelessWidget {
                 ),
                 SizedBox(height: height*0.04 ,),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 6),
                   child: Column(
                     children: <Widget>[
                       Visibility(
@@ -132,19 +161,23 @@ class LoginWidget extends StatelessWidget {
                       ),
                       Visibility(
                         visible: provider.loading,
-                        child: LoadingWidget("Loggin you in!", LURA_BLUE)
+                        child: LoadingWidget("Logging in", LURA_BLUE)
                       )
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  child: newAccountButton,
+                )
               ],
             ),
           ),
           errorText,
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: newAccountButton,
-          )
+//          Padding(
+//            padding: const EdgeInsets.all(32.0),
+//            child: newAccountButton,
+//          )
         ],
       ),
     );

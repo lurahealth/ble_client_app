@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 // colours
 const Color LURA_BLUE = Color(0xFF405280);
-const  Color LURA_LIGHT_BLUE = Colors.lightBlue;
+const Color LURA_LIGHT_BLUE = Color(0xFF69CDEB);
 const Color LURA_ORANGE = Colors.deepOrangeAccent;
 const Color LIGHT_GREEN = Colors.lightGreen;
+const Color LURA_MINT = Color(0xFF94D5d5);
 
 // TextStyle
 const TextStyle WHITE_TEXT = TextStyle(color: Colors.white);

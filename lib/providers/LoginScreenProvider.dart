@@ -1,4 +1,5 @@
 import 'package:ble_client_app/singletons/CognitoUserSingleton.dart';
+import 'package:ble_client_app/singletons/SecureStorageUtils.dart';
 import 'package:ble_client_app/utils/StringUtils.dart';
 import 'package:ble_client_app/utils/StyleUtils.dart';
 import 'package:email_validator/email_validator.dart';
@@ -18,6 +19,21 @@ class LoginScreenProvider with ChangeNotifier {
 
   bool loginError = false;
   String loginErrorMessage = "";
+  bool loginDetailsChecked = false;
+
+  Future<void> checkLoginDetails(BuildContext context) async {
+    if(!loginDetailsChecked){
+      loginDetailsChecked = true;
+      email = await readFromSecureStorage(SAVED_USER_EMAIL);
+      if (email != null) {
+        password = await readFromSecureStorage(SAVED_PASSWORD);
+        if(password != null){
+          loginUser(context);
+        }
+      }
+    }
+  }
+
 
   Future<void> loginUser(BuildContext context) async {
     checkLoginFields();
@@ -28,7 +44,7 @@ class LoginScreenProvider with ChangeNotifier {
 
       CognitoUserSingleton.instance
           .loginUser(email, password)
-          .then((response) {
+          .then((response) async {
         print("Success: $response");
         loading = false;
         if (response == NEW_PASSWORD_REQUIRED) {
@@ -44,6 +60,7 @@ class LoginScreenProvider with ChangeNotifier {
           loading = false;
           notifyListeners();
         }else if(response == USER_LOGGED_IN){
+          await saveUserNameAndPassword(email, password);
           Navigator.pushNamedAndRemoveUntil(context, DEVICE_SCAN_SCREEN, (route) => false);
         } else{
           loginError = true;

@@ -12,14 +12,14 @@ class MainUIScreenDailyStatsWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        dataWidget("Todays Lowest pH", provider.minPh?.round() ?? 0),
-        dataWidget("Todays Highest pH", provider.maxPh?.round() ?? 0),
-        dataWidget("Todays Average pH", provider.averagePh?.round() ?? 0)
+        dataWidget("Today's Lowest pH", provider.minPh ?? 0),
+        dataWidget("Today's Highest pH", provider.maxPh ?? 0),
+        dataWidget("Today's Average pH", provider.averagePh ?? 0)
       ],
     );
   }
 
-  Widget dataWidget(String text, int values){
+  Widget dataWidget(String text, double values){
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -27,7 +27,7 @@ class MainUIScreenDailyStatsWidget extends StatelessWidget {
         children: <Widget>[
           Text(text),
           SizedBox(width: 20,),
-          Text(values.toString())
+          Text(values.toStringAsFixed(2))
         ],
       ),
     );
