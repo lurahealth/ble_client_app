@@ -42,9 +42,9 @@ dependencies:
       url: git://github.com/julienzarka/flutter_blue.git
       commit: b0ae75079b82e8c4f049d0940462ab86faa517ad
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+#dev_dependencies:
+#  flutter_test:
+#    sdk: flutter
 
 
 # For information on the generic Dart part of this file, see the
